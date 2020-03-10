@@ -11,7 +11,8 @@ try:
   import sys
   import os
   import parser
-  import scan-it
+  import ScanIt
+  import OutputFileFormat
 except ImportError:
   raise ImportError('Error importing module')
 
@@ -23,10 +24,12 @@ def main():
 if __name__ == '__main__':
   try:
     main()
+   # handle keyboard interrupt (ctrl+?)
    except KeyboardInterrupt:
     try:
       print('The program has been interrupted.')
       sys.exit(0)
-    except SystemError:
+    # handle sys.exit error
+    except SystemExit:
       os._exit(0)
       
