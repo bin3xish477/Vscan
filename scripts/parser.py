@@ -57,3 +57,6 @@ def ParseArgs():
     type=str,
     help='name of file to create (json, csv, or nornaml)')
   
+  args = parser.parse_args()
+  
+  return args
