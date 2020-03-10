@@ -43,5 +43,5 @@ def toNORM(filename, data):
     # a dictionary and we'll simply traverse it
     # and print key,value pairs seperated by colons
     for key, val in data:
-      txtfile.write(key + ': ' + val)
+      txtfile.write(key + ': ' + val, end='\n')
     
