@@ -5,9 +5,11 @@ import csv
 
 
 # 8888888888888888888888888888888
-# purpose: output data as CSV
-# param: name of file to create,
-#        data to write to file
+"""
+purpose: output data as CSV
+params: name of file to create,
+        data to write to file
+"""
 # 8888888888888888888888888888888
 def toCSV(filename, data):
   with open(filename + '.csv', newline='') as csvfile:
@@ -21,9 +23,11 @@ def toCSV(filename, data):
 
 
 # 8888888888888888888888888888888
-# purpose:  output data as JSON
-# param: name of file to create,
-#        data to write to file
+"""
+purpose:  output data as JSON
+params: name of file to create,
+        data to write to file
+"""
 # 8888888888888888888888888888888
 def toJSON(filename, data):
   with open(filename + '.json') as jsonfile:
@@ -33,9 +37,11 @@ def toJSON(filename, data):
 
 
 # 8888888888888888888888888888888
-# purpose: output data as NORMAL
-# param: name of file to create,
-#        data to write to file
+"""
+purpose: output data as NORMAL
+params: name of file to create,
+        data to write to file
+"""
 # 8888888888888888888888888888888
 def toNORM(filename, data):
   with open(filename + '.txt') as txtfile:
