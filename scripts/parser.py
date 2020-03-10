@@ -2,6 +2,8 @@
 
 from argparse import ArgumentParser
 import colored
+from sys import argv, exit
+from main import program_name
 
 ###### add some color to this!
 def ParseArgs():
@@ -11,11 +13,12 @@ def ParseArgs():
   
   parser = ArgumentParser(
     description='Scan files for viruses',
-    usage='(-f|--file) [-m|--mass] [--csv]\
-                  \n\t[--json] [--norm] [-o|--output]'
+    usage='vscan (-f|--file) [-m|--mass] [--csv]\
+                  \n\t     [--json] [--norm] [-o|--output]'
   )
   
-  required = parser.add_argument_group('required args')
+  required = parser.add_argument_group('REQUIRED')
+  parser._optionals.title = ('OPTIONAL')
   
   # the single file a user wants to scan
   required.add_argument(
@@ -29,9 +32,9 @@ def ParseArgs():
   parser.add_argument(
     '-m','--mass',
     type=str,
-    dest='mass_scan',
+    dest='mass_file',
     help='file containing multiple files to scan (50 files max)\
-           \nNote: the timing for multiple scans will depend on the quality of your api key')
+           \nNote: the timing for multiple scans will depend on the quality of your API key')
   
   # if the user wants wants the output format to be pure csv
   parser.add_argument(
@@ -61,6 +64,12 @@ def ParseArgs():
     dest='output_file',
     type=str,
     help='name of file to create (json, csv, or nornaml)')
+  # check if no args were passed
+  # or if too many args were passed
+  if len(argv) == 1 or len(argv) >= 5:
+  	program_name()
+  	parser.print_help()
+  	exit(1)
   
   args = parser.parse_args()
   

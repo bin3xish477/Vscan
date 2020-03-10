@@ -16,5 +16,10 @@ param: the md5 hash of the
 '''
 # 88888888888888888888888888888888888888
 def get_results(md5_hash):
-VIRUSTOTAL_LINK = f'https://www.virustotal.com/vtapi/v2/file/report?apikey={API_KEY}&resource={md5_hash}'
-req = requests.get(VIRUSTOTAL_LINK)
+	url = 'https://www.virustotal.com/vtapi/v2/file/report'
+
+	params = {'apikey': API_KEY, 'resource': md5_hash}
+
+	resp = requests.get(url, params=params)
+
+	return resp.json()
