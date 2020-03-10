@@ -9,31 +9,53 @@
 
 try:
   import sys
+
   import os
+
   import parser
+
   import scanit
+
   import outputfileformat
-  import haslib
+
+  import hashlib
+
 except ImportError:
-  raise ImportError('Error importing module')
+  raise ImportError('Error importing module... try "pip3 install -r requirements.txt"')
+
+
 
 def gen_hash(file_content):
+	pass
   
-  
+
+
 def main():
-    args = parser.
+	# get arguments
+  arguments = parser.ParseArgs()
+
+  # dict containing values of arguments passed
+  args_dict = {
+  'file_to_scan': arguments.single_file,
+  'mass_file': arguments.mass_scan,
+  'csv': arguments.csv,
+  'json': arguments.csv,
+  'norm': arguments.norm,
+  'output_file': arguments.output_file
+  }
+
+  
 
 
 
 if __name__ == '__main__':
-  try:
-    main()
-   # handle keyboard interrupt (ctrl+?)
-   except KeyboardInterrupt:
-    try:
-      print('The program has been interrupted.')
-      sys.exit(0)
-    # handle sys.exit error
-    except SystemExit:
-      os._exit(0)
+	try:
+		main()
+	# handle keyboard interrupt (ctrl+?)
+	except KeyboardInterrupt:
+		try:
+			print('The program has been interrupted.')
+			sys.exit(0)
+		except SystemExit:
+			os._exit(0)
       
