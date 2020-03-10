@@ -12,7 +12,7 @@ def ParseArgs():
   parser = ArgumentParser(
     description='Scan files for viruses',
     usage='usage: -f|--file [-m|--mass] [--csv]
-                  [--json] [--norm]'
+                  [--json] [--norm] [-o|--output]'
   )
   
   required = parser.add_argument_group('required args')
