@@ -21,7 +21,7 @@ def gen_hash(file_content):
   
   
 def main():
-    
+    args = parser.
 
 
 
