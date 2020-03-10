@@ -11,11 +11,15 @@ try:
   import sys
   import os
   import parser
-  import ScanIt
-  import OutputFileFormat
+  import scanit
+  import outputfileformat
+  import haslib
 except ImportError:
   raise ImportError('Error importing module')
 
+def gen_hash(file_content):
+  
+  
 def main():
     
 
