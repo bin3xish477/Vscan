@@ -18,13 +18,13 @@ purpose : parse arguments passed
 def ParseArgs():
 
   parser = ArgumentParser(
-    description=('%s%s*SCAN FILES FOR VIRUSES*%s'%(fg(255),bg(1),attr(0))),
+    description=('%s%s * SCAN FILES FOR VIRUSES WITH VSCAN *%s'%(fg(255),bg(1),attr(0))),
     usage=('vscan %s(-f|--file) [-m|--mass] [--csv]\
                   \n\t     [--json] [--norm] [-o|--output]%s')%(fg(111),attr(0))
   )
   
-  required = parser.add_argument_group('%s%sREQUIRED%s'%(fg(255),bg(2),attr(0)))
-  parser._optionals.title = ('%s%sOPTIONAL%s'%(fg(255),bg(2),attr(0)))
+  required = parser.add_argument_group('%s%s REQUIRED %s'%(fg(255),bg(2),attr(0)))
+  parser._optionals.title = ('%s%s OPTIONAL %s'%(fg(255),bg(2),attr(0)))
   
   # the single file a user wants to scan
   required.add_argument(
@@ -70,6 +70,12 @@ def ParseArgs():
     dest='output_file',
     type=str,
     help='name of file to create (json, csv, or nornaml)')
+  # if the user wants to provide an API key as an argument
+  parser.add_argument(
+  	'-a', '--apikey',
+  	dest='apikey',
+  	type=str,
+  	help='VirusTotal API key to use for scan requests')
 
   # check if no args were passed
   # or if too many args were passed

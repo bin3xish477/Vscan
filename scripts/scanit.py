@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 # *****************************  SCAN FILES  ********************************
+
 import json
 import requests
+from sys import exit
 
-API_KEY = 'fd50a384922570f4ab387464e3042bf5c15edd2d0f3659122c58a85bb8edec54' # YOUR API KEY GOES HERE!!
+ # YOUR API KEY GOES HERE!!
 
 
 # 88888888888888888888888888888888888888
@@ -12,19 +14,28 @@ API_KEY = 'fd50a384922570f4ab387464e3042bf5c15edd2d0f3659122c58a85bb8edec54' # Y
 purpose: send a GET request
          to VirusTotal to retrieve the 
          scan results.
-param: the md5 hash of the
-       file/s that will be scanned
+params: - the md5 hash of the
+        file/s that will be scanned,
+			  - VirusTotal api key to append
+			  to url
 '''
 # 88888888888888888888888888888888888888
-def get_scan(sha256_hash):
-	# url to request scan results
-	url = 'https://www.virustotal.com/vtapi/v2/file/report'
-	
-	# parameter that will be passed to GET request
-	params = {'apikey': API_KEY, 'resource': sha256_hash}
-
-	# storing the reponse
-	resp = requests.get(url, params=params)
-
+def get_scan(sha256_hash, apikey):
+	# if no API key was passed prompt user for API key
+	if not apikey:
+		print('[-] You must provide a VirusTotal API key to proceed')
+		# get API key
+		apikey = input('Please enter a valid VirusTotal API key: ')
+	# try to make requests
+	try:
+		# url to request scan results
+		url = (f'https://www.virustotal.com/vtapi/v2/file/report\
+			?apikey={apikey}&resource={sha256_hash}')
+		# storing the reponse
+		resp = requests.get(url)
+	# if error occurs while making requests
+	except:
+		print('[-] Error making GET request to VirusTotal')
+		exit(0)
 	# return json data
 	return resp.json()

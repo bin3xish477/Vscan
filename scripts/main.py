@@ -9,7 +9,7 @@ try:
   import sys
   import os
   import parser
-  from scanit import *
+  import scanit
   import fileformat
   import hashlib
 except ImportError:
@@ -24,13 +24,15 @@ purpose: perform a single scan on a file
 param: name of the file to scan
 '''
 # 88888888888888888888888888888888888888
-def singleScan(filename):
-	"""
-	"""
+def singleScan(filename, apikey):
+
 	content = open(filename, 'rb').read()
 
-	return genSHA256(content)
+	file_hash = genSha256(content)
 
+	result = scanit.get_scan(file_hash, apikey)
+
+	return result
 
 
 
@@ -39,16 +41,26 @@ def singleScan(filename):
 purpose: perform a mass scan on all
 					files contained within a 
 					single file
-param: file containing list of files
+param: - file containing list of files
 				to scan for viruses
+				- VirusTotal API key
 '''
 # 88888888888888888888888888888888888888
-def masScan(files):
-	"""
-	"""
-	pass
+def masScan(filename, apikey):
 
+	result_lst = []
+	# open file containing files to scan
+	with open(filename, 'r') as allfiles:
+		# loop through each file and perform
+		# a scan on each one
+		for file in allfiles:
+				content = open(file, 'rb').read()
 
+				file_hash = genSha256(content)
+
+				result = scanit.get_scan(file_hash)
+
+				result_lst.append(result)
 
 
 # 88888888888888888888888888888888888888
@@ -58,8 +70,7 @@ param: data returned from GET requests
 '''
 # 88888888888888888888888888888888888888
 def forJSON(data):
-	"""
-	"""
+
 	pass
 
 
@@ -71,8 +82,7 @@ param: data returned from GET requests
 '''
 # 88888888888888888888888888888888888888
 def forCSV(data):
-	"""
-	"""
+
 	pass
 
 
@@ -84,6 +94,7 @@ param: data returned from GET requests
 '''
 # 88888888888888888888888888888888888888
 def forNORM(data):
+	
 	pass
 
 
@@ -96,6 +107,7 @@ param: file contents read as bytes
 '''
 # 88888888888888888888888888888888888888
 def genSha256(file_content):
+
 	file_hash = hashlib.sha256(file_content).hexdigest()
 	
 	return file_hash
@@ -125,12 +137,13 @@ def main():
   'csv': arguments.csv,
   'json': arguments.csv,
   'norm': arguments.norm,
-  'output_file': arguments.output_file
+  'output_file': arguments.output_file,
+  'apikey': arguments.apikey
   }
 
   if args_dict['single_file']:
-  	results = singleScan(args_dict['single_file'])
-  	print(results)
+  	file_hash = singleScan(args_dict['single_file'])
+  	
 
 
   elif args_dict['mass_file']:
