@@ -128,16 +128,14 @@ def main():
   'output_file': arguments.output_file
   }
 
-  # if args_dict['single_file']:
-  # 	results = singleScan(args_dict['single_file'])
-  # 	print(results)
+  if args_dict['single_file']:
+  	results = singleScan(args_dict['single_file'])
+  	print(results)
 
 
-  # elif args_dict['mass_file']:
-  # 	results = masScan(args_dict['mass_scan'])
+  elif args_dict['mass_file']:
+  	results = masScan(args_dict['mass_scan'])
 
-  result = get_scan('26edad74ca6c97bc446fb56d6900308a067453ce1728725a72a3f7407303c4ee')
-  print(result)
 
 
 
