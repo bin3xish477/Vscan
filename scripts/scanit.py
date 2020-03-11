@@ -37,3 +37,4 @@ def get_scan(sha256_hash, apikey):
          	print('[-] There was a connection error!')
 	# return json data
 	return resp.json()
+
