@@ -33,8 +33,7 @@ def get_scan(sha256_hash, apikey):
 		# storing the reponse
 		resp = requests.get(url)
 	# if error occurs while making requests
-	except:
-		print('[-] Error making GET request to VirusTotal')
-		exit(0)
+    	except requests.exceptions.ConnectionError:
+         	print('[-] There was a connection error!')
 	# return json data
 	return resp.json()
