@@ -2,16 +2,17 @@
 
 # **************************** OUTPUT RESULT TO FILE ****************************
 
+
 import json
 import csv
 
 
 # -------------------------------
-"""
+'''
 purpose: output data as CSV
 params: name of file to create,
 data to write to file
-"""
+'''
 # -------------------------------
 def toCSV(filename, data):
 
@@ -31,11 +32,11 @@ def toCSV(filename, data):
 
 
 # -------------------------------
-"""
+'''
 purpose: output data as JSON
 params: name of file to create,
 data to write to file
-"""
+'''
 # -------------------------------
 def toJSON(filename, data):
 
@@ -50,11 +51,11 @@ def toJSON(filename, data):
 
 
 # -------------------------------
-"""
+'''
 purpose: output data as NORMAL
 params: name of file to create,
 data to write to file
-"""
+'''
 # -------------------------------
 def toNORM(filename, data):
 	
@@ -70,7 +71,7 @@ def toNORM(filename, data):
 
 
 
-""" Handling possible file errors """
+''' Handling possible file errors '''
 def FileError():
 	print('[-] An error occured with a file operation.')
 	exit(0)

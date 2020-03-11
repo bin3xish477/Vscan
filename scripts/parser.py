@@ -2,6 +2,7 @@
 
 # ****************************** PARSE ARGUMENTS ******************************
 
+
 from argparse import ArgumentParser
 from colored import fg, attr, bg
 from sys import argv, exit
@@ -9,10 +10,10 @@ from main import programName
 
 
 # -------------------------------
-"""
+'''
 purpose: parse arguments passed
 from the command line
-"""
+'''
 # -------------------------------
 def ParseArgs():
 

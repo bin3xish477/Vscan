@@ -5,6 +5,7 @@
 # Started : 2020-03-10
 # Ended : 2020-03-
 
+
 try:
   import parser
   import scanit
@@ -13,6 +14,7 @@ try:
   import sys
   import os
   import json
+  from sys import exit
 except ImportError as err:
   print(f'Import Error: {err}')
 
@@ -24,19 +26,43 @@ passed as an argument
 param: name of the file to scan
 '''
 # --------------------------------------
-def singleScan(filename, apikey):
+def singleScan(filename, apikey, fileformat):
 
+	# the contents of the file in bytes
 	content = open(filename, 'rb').read()
 
+	# the file generated based on the contents of the file
 	file_hash = genSha256(content)
 
+	# scan results retrieved from VirusTotal
 	result = scanit.get_scan(file_hash, apikey)
+
+	# check if the user wanted the results
+	# to be saved as a CSV file
+	if fileformat == 'csv':
+		result = forCsv(result)
+
+	# check if the user wanted the results
+	# to be saved as a jSON file
+	elif fileformat == 'json':
+		result = forJson(result)
+
+	# check if the user wanted the results
+	# to be saved as a normal text file
+	elif fileformat == 'norm':
+		result = forNorm(result)
+
+	# if the user did not specify a fileformat option
+	# print the raw data as json to the console
+	else:
+		toConsole(result)
+
 
 	return result
 
 
 
-# --------------------------------------
+# --------------------------------------)
 ''' 
 purpose: perform a mass scan on all
 files contained within a single file
@@ -44,7 +70,7 @@ param: - file containing list of files
 				to scan for viruses
 				- VirusTotal API key
 '''
-# --------------------------------------
+# --------------------------------------)
 def masScan(filename, apikey, fileformat):
 
 	# contains list of results for each
@@ -75,7 +101,7 @@ def masScan(filename, apikey, fileformat):
 
 				# check if the user wanted the results
 				# to be saved as a jSON file
-				elif fileformat == 'json'
+				elif fileformat == 'json':
 					result = forJson(result)
 
 				# check if the user wanted the results
@@ -97,46 +123,52 @@ def masScan(filename, apikey, fileformat):
 
 
 
-# --------------------------------------
-''' 
-purpose: parse data for JSON file
-param: data returned from GET requests
-'''
-# --------------------------------------
-def forJson(data):
-
-	pass
-
-
-
-# --------------------------------------
+# --------------------------------------)
 ''' 
 purpose: parse data for CSV file
 param: data returned from GET requests
 '''
-# --------------------------------------
+# --------------------------------------)
 def forCsv(data):
 
 	pass
 
 
 
-# --------------------------------------
+# --------------------------------------)
+''' 
+purpose: parse data for JSON file
+param: data returned from GET requests
+'''
+# --------------------------------------)
+def forJson(data):
+
+	json_str = json.loads(str(data))
+
+	return json_str
+
+
+
+# --------------------------------------)
 ''' 
 purpose: parse data for normal text file
 param: data returned from GET requests
 '''
-# --------------------------------------
+# --------------------------------------)
 def forNorm(data):
 
 	pass
 
 
 
-
+# --------------------------------------)
+'''
+'''
+# --------------------------------------)
 def toConsole(data):
 
 	print(data)
+	exit(1)
 
 
 
@@ -175,16 +207,19 @@ def main():
 
   # dict containing values of arguments passed
   args_dict = {
+
   'single_file': arguments.single_file,
-  'mass_file': arguments.mass_file,
-  'csv': arguments.csv,
-  'json': arguments.csv,
-  'norm': arguments.norm,
+  'mass_file':   arguments.mass_file,
+  'csv':         arguments.csv,
+  'json':        arguments.csv,
+  'norm':        arguments.norm,
   'output_file': arguments.output_file,
-  'apikey': arguments.apikey
+  'apikey':      arguments.apikey
+
   }
 
-  fileformat = ''
+  # if no file format is passed, this variable will not change
+  fileformat = None
 
   # if file format is csv
   if args_dict['csv']:
@@ -198,10 +233,6 @@ def main():
   elif args_dict['norm']:
   	fileformat = 'norm'
 
-  # if no file format argument was provided
-  # which means display results to the 
-  else:
-  	fileformat = None
 
   """ initiating scans based on the file that was passed as an argument """
 
