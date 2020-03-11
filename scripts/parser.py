@@ -1,24 +1,30 @@
 #!/usr/bin/env python3
 
+# ****************************** PARSE ARGUMENTS ******************************
+
 from argparse import ArgumentParser
-import colored
+from colored import fg, attr, bg
 from sys import argv, exit
 from main import program_name
 
-###### add some color to this!
+# 8888888888888888888888888888888
+"""
+purpose : parse arguments passed
+				from the command line
+"""
+# 8888888888888888888888888888888
+
+
 def ParseArgs():
-  """
-  parsing arguments passed in the command line
-  """
-  
+
   parser = ArgumentParser(
-    description='Scan files for viruses',
-    usage='vscan (-f|--file) [-m|--mass] [--csv]\
-                  \n\t     [--json] [--norm] [-o|--output]'
+    description=('%s%s*SCAN FILES FOR VIRUSES*%s'%(fg(255),bg(1),attr(0))),
+    usage=('vscan %s(-f|--file) [-m|--mass] [--csv]\
+                  \n\t     [--json] [--norm] [-o|--output]%s')%(fg(111),attr(0))
   )
   
-  required = parser.add_argument_group('REQUIRED')
-  parser._optionals.title = ('OPTIONAL')
+  required = parser.add_argument_group('%s%sREQUIRED%s'%(fg(255),bg(2),attr(0)))
+  parser._optionals.title = ('%s%sOPTIONAL%s'%(fg(255),bg(2),attr(0)))
   
   # the single file a user wants to scan
   required.add_argument(
@@ -64,13 +70,18 @@ def ParseArgs():
     dest='output_file',
     type=str,
     help='name of file to create (json, csv, or nornaml)')
+
   # check if no args were passed
   # or if too many args were passed
   if len(argv) == 1 or len(argv) >= 5:
+  	# show program banner
   	program_name()
+  	# print help menu
   	parser.print_help()
+  	# exit program
   	exit(1)
   
+  # get arguments from parser object
   args = parser.parse_args()
   
   return args

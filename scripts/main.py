@@ -1,33 +1,117 @@
 #!/usr/bin/env python3
 
-# **********************************************************************
+# ************************* COMMAND & CONTROL *********************************
 # Author : Alexis Rodriguez
 # Started : 2020-03-10
 # Ended : 2020-03-
-#                          Command & Control
-# **********************************************************************
 
 try:
   import sys
-
   import os
-
   import parser
-
-  import scanit
-
-  import outputfileformat
-
+  from scanit import *
+  import fileformat
   import hashlib
-
 except ImportError:
   raise ImportError('Error importing module... try "pip3 install -r requirements.txt"')
 
 
 
-def gen_hash(file_content):
+# 88888888888888888888888888888888888888
+''' 
+purpose: perform a single scan on a file
+					passed as an argument
+param: name of the file to scan
+'''
+# 88888888888888888888888888888888888888
+def singleScan(filename):
+	"""
+	"""
+	content = open(filename, 'rb').read()
+
+	return genSHA256(content)
+
+
+
+
+# 88888888888888888888888888888888888888
+''' 
+purpose: perform a mass scan on all
+					files contained within a 
+					single file
+param: file containing list of files
+				to scan for viruses
+'''
+# 88888888888888888888888888888888888888
+def masScan(files):
+	"""
+	"""
 	pass
-  
+
+
+
+
+# 88888888888888888888888888888888888888
+''' 
+purpose: parse data for JSON file
+param: data returned from GET requests
+'''
+# 88888888888888888888888888888888888888
+def forJSON(data):
+	"""
+	"""
+	pass
+
+
+
+# 88888888888888888888888888888888888888
+''' 
+purpose: parse data for CSV file
+param: data returned from GET requests
+'''
+# 88888888888888888888888888888888888888
+def forCSV(data):
+	"""
+	"""
+	pass
+
+
+
+# 88888888888888888888888888888888888888
+''' 
+purpose: parse data for normal text file
+param: data returned from GET requests
+'''
+# 88888888888888888888888888888888888888
+def forNORM(data):
+	pass
+
+
+
+# 88888888888888888888888888888888888888
+''' 
+purpose: generate sha256 hash to send
+					as to VirusTotal to be scanned
+param: file contents read as bytes
+'''
+# 88888888888888888888888888888888888888
+def genSha256(file_content):
+	file_hash = hashlib.sha256(file_content).hexdigest()
+	
+	return file_hash
+	
+
+
+def program_name():
+	print('''
+██╗   ██╗███████╗ ██████╗ █████╗ ███╗   ██╗    ██╗   ██╗ ██╗    ██████╗ 
+██║   ██║██╔════╝██╔════╝██╔══██╗████╗  ██║    ██║   ██║███║   ██╔═████╗
+██║   ██║███████╗██║     ███████║██╔██╗ ██║    ██║   ██║╚██║   ██║██╔██║
+╚██╗ ██╔╝╚════██║██║     ██╔══██║██║╚██╗██║    ╚██╗ ██╔╝ ██║   ████╔╝██║
+ ╚████╔╝ ███████║╚██████╗██║  ██║██║ ╚████║     ╚████╔╝  ██║██╗╚██████╔╝
+  ╚═══╝  ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝      ╚═══╝   ╚═╝╚═╝ ╚═════╝
+''')
+
 
 
 def main():
@@ -36,23 +120,28 @@ def main():
 
   # dict containing values of arguments passed
   args_dict = {
-  'file_to_scan': arguments.single_file,
-  'mass_file': arguments.mass_scan,
+  'single_file': arguments.single_file,
+  'mass_file': arguments.mass_file,
   'csv': arguments.csv,
   'json': arguments.csv,
   'norm': arguments.norm,
   'output_file': arguments.output_file
   }
 
+  # if args_dict['single_file']:
+  # 	results = singleScan(args_dict['single_file'])
+  # 	print(results)
 
-def program_name():
-	print(''' _   _                               __   _____ 
-| | | |                             /  | |  _  |
-| | | | ___  ___ __ _ _ __   __   __`| | | |/' |
-| | | |/ __|/ __/ _` | '_ \\  \\ \\ / / | | |  /| |
-\\ \\_/ /\\__ \\ (_| (_| | | | |  \\ V / _| |_\\ |_/ /
- \\___/ |___/\\___\\__,_|_| |_|   \\_/  \\___(_)___/
-''')
+
+  # elif args_dict['mass_file']:
+  # 	results = masScan(args_dict['mass_scan'])
+
+  result = get_scan('26edad74ca6c97bc446fb56d6900308a067453ce1728725a72a3f7407303c4ee')
+  print(result)
+
+
+
+
 
 
 
