@@ -32,7 +32,7 @@ def get_scan(sha256_hash, apikey):
 			?apikey={apikey}&resource={sha256_hash}')
 		# storing the reponse
 		resp = requests.get(url)
-	# if error occurs while making requests
+	# if connection error occurs while making requests
     	except requests.exceptions.ConnectionError:
          	print('[-] There was a connection error!')
 	# return json data
