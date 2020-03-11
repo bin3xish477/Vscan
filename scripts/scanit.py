@@ -6,18 +6,16 @@ import json
 import requests
 from sys import exit
 
- # YOUR API KEY GOES HERE!!
-
 
 # 88888888888888888888888888888888888888
 ''' 
 purpose: send a GET request
-         to VirusTotal to retrieve the 
-         scan results.
-params: - the md5 hash of the
-        file/s that will be scanned,
-			  - VirusTotal api key to append
-			  to url
+to VirusTotal to retrieve the 
+scan results.
+params: - the SHA256 hash of the
+file that will be scanned,
+- VirusTotal api key to append
+to url
 '''
 # 88888888888888888888888888888888888888
 def get_scan(sha256_hash, apikey):

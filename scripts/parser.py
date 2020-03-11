@@ -9,8 +9,8 @@ from main import program_name
 
 # 8888888888888888888888888888888
 """
-purpose : parse arguments passed
-				from the command line
+purpose: parse arguments passed
+from the command line
 """
 # 8888888888888888888888888888888
 

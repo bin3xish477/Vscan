@@ -10,7 +10,7 @@ import csv
 """
 purpose: output data as CSV
 params: name of file to create,
-        data to write to file
+data to write to file
 """
 # 8888888888888888888888888888888
 def toCSV(filename, data):
@@ -33,7 +33,7 @@ def toCSV(filename, data):
 """
 purpose: output data as JSON
 params: name of file to create,
-        data to write to file
+data to write to file
 """
 # 8888888888888888888888888888888
 def toJSON(filename, data):
@@ -51,7 +51,7 @@ def toJSON(filename, data):
 """
 purpose: output data as NORMAL
 params: name of file to create,
-        data to write to file
+data to write to file
 """
 # 8888888888888888888888888888888
 def toNORM(filename, data):

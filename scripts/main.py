@@ -20,7 +20,7 @@ except ImportError:
 # 88888888888888888888888888888888888888
 ''' 
 purpose: perform a single scan on a file
-					passed as an argument
+passed as an argument
 param: name of the file to scan
 '''
 # 88888888888888888888888888888888888888
@@ -39,8 +39,7 @@ def singleScan(filename, apikey):
 # 88888888888888888888888888888888888888
 ''' 
 purpose: perform a mass scan on all
-					files contained within a 
-					single file
+files contained within a single file
 param: - file containing list of files
 				to scan for viruses
 				- VirusTotal API key
@@ -94,7 +93,7 @@ param: data returned from GET requests
 '''
 # 88888888888888888888888888888888888888
 def forNORM(data):
-	
+
 	pass
 
 
@@ -102,7 +101,7 @@ def forNORM(data):
 # 88888888888888888888888888888888888888
 ''' 
 purpose: generate sha256 hash to send
-					as to VirusTotal to be scanned
+as to VirusTotal to be scanned
 param: file contents read as bytes
 '''
 # 88888888888888888888888888888888888888
