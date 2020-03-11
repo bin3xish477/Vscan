@@ -5,22 +5,21 @@
 from argparse import ArgumentParser
 from colored import fg, attr, bg
 from sys import argv, exit
-from main import program_name
+from main import programName
 
-# 8888888888888888888888888888888
+
+# -------------------------------
 """
 purpose: parse arguments passed
 from the command line
 """
-# 8888888888888888888888888888888
-
-
+# -------------------------------
 def ParseArgs():
 
   parser = ArgumentParser(
-    description=('%s%s * SCAN FILES FOR VIRUSES WITH VSCAN *%s'%(fg(255),bg(1),attr(0))),
+    description=('%s%s* SCAN FILES FOR VIRUSES WITH VSCAN *%s'%(fg(255),bg(1),attr(0))),
     usage=('vscan %s(-f|--file) [-m|--mass] [--csv]\
-                  \n\t     [--json] [--norm] [-o|--output]%s')%(fg(111),attr(0))
+                  \n\t     [--json] [--norm] [-o|--output]%s')%(fg(39),attr(0))
   )
   
   required = parser.add_argument_group('%s%s REQUIRED %s'%(fg(255),bg(2),attr(0)))
@@ -75,13 +74,14 @@ def ParseArgs():
   	'-a', '--apikey',
   	dest='apikey',
   	type=str,
+  	default=None,
   	help='VirusTotal API key to use for scan requests')
 
   # check if no args were passed
   # or if too many args were passed
   if len(argv) == 1 or len(argv) >= 5:
   	# show program banner
-  	program_name()
+  	programName()
   	# print help menu
   	parser.print_help()
   	# exit program

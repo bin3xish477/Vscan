@@ -7,7 +7,7 @@ import requests
 from sys import exit
 
 
-# 88888888888888888888888888888888888888
+# --------------------------------------
 ''' 
 purpose: send a GET request
 to VirusTotal to retrieve the 
@@ -17,8 +17,9 @@ file that will be scanned,
 - VirusTotal api key to append
 to url
 '''
-# 88888888888888888888888888888888888888
+# --------------------------------------
 def get_scan(sha256_hash, apikey):
+	
 	# if no API key was passed prompt user for API key
 	if not apikey:
 		print('[-] You must provide a VirusTotal API key to proceed')
