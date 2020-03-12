@@ -16,6 +16,7 @@ except importError:
 # --------------------------------------
   
 def interface():
+ pass
  
 
 
