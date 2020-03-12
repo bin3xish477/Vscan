@@ -5,6 +5,7 @@
 
 import requests
 from sys import exit
+from time import sleep
 from colored import fg, attr
 
 
@@ -38,7 +39,7 @@ def get_scan(sha256_hash, apikey):
 
 		# storing the reponse
 		resp = requests.get(url, params=params)
-
+		sleep(180)
 		# get returned json data
 		resp_json = resp.json()
 

@@ -15,6 +15,7 @@ try:
   import os
   import json
   from sys import exit
+  from colored import fg, bg, attr
 except ImportError as err:
   print(f'Import Error: {err}')
 
@@ -257,7 +258,7 @@ if __name__ == '__main__':
 	# handle keyboard interrupt (ctrl+?)
 	except KeyboardInterrupt:
 		try:
-			print('The program has been interrupted.')
+			print('\n[-] %s%sProgram interrupted!%s' % (fg(233), bg(9), attr(0)))
 			sys.exit(0)
 		except SystemExit:
 			os._exit(0)
