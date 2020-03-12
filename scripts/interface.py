@@ -3,7 +3,7 @@
 
 # ***************************** PROGRAM INTERFACE ******************************
 
-
+# WORK ON THIS KENNY! I NEED YOU TO REFACTOR GOOGLE'S CODE LMAOO.. remember to delete this!!!
 try:
  import main
 except importError:
