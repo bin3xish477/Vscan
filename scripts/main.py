@@ -16,6 +16,7 @@ try:
   import json
   from sys import exit
   from colored import fg, bg, attr
+  from interface import interface
 except ImportError as err:
   print(f'Import Error: {err}')
 
@@ -215,38 +216,39 @@ def main():
   'json':        arguments.csv,
   'norm':        arguments.norm,
   'output_file': arguments.output_file,
-  'apikey':      arguments.apikey
+  'apikey':      arguments.apikey,
+  'interface':   arguments.interface
 
   }
 
-  # if no file format is passed, this variable will not change
-  fileformat = None
+  if args_dict['interface']:
+	interface()
+  else:
+	  # if no file format is passed, this variable will not change
+	  fileformat = None
 
-  # if file format is csv
-  if args_dict['csv']:
-  	fileformat = 'csv'
+	  # if file format is csv
+	  if args_dict['csv']:
+		fileformat = 'csv'
 
-  # if file format is json
-  elif args_dict['json']:
-  	fileformat = 'json'
+	  # if file format is json
+	  elif args_dict['json']:
+		fileformat = 'json'
 
-  # if fileformat is normal
-  elif args_dict['norm']:
-  	fileformat = 'norm'
-
-
-  """ initiating scans based on the file that was passed as an argument """
-
-  # if the f argument was given
-  if args_dict['single_file']:
-  	scan_results = singleScan(args_dict['single_file'], args_dict['apikey'], fileformat)
-
-  # if the m argument was given
-  elif args_dict['mass_file']:
-  	scan_results = masScan(args_dict['mass_scan'], args_dict['apikey'], fileformat)
+	  # if fileformat is normal
+	  elif args_dict['norm']:
+		fileformat = 'norm'
 
 
+	  """ initiating scans based on the file that was passed as an argument """
 
+	  # if the f argument was given
+	  if args_dict['single_file']:
+		scan_results = singleScan(args_dict['single_file'], args_dict['apikey'], fileformat)
+
+	  # if the m argument was given
+	  elif args_dict['mass_file']:
+		scan_results = masScan(args_dict['mass_scan'], args_dict['apikey'], fileformat)
 
 
 
