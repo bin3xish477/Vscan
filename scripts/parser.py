@@ -77,6 +77,13 @@ def ParseArgs():
   	type=str,
   	default=None,
   	help='VirusTotal API key to use for scan requests')
+  
+  # if user wants an interface to interact with
+  parser.add_argument(
+    '-i', '--inter',
+    action='store_action',
+    default=False,
+    help='interface')
 
   # check if no args were passed
   # or if too many args were passed
