@@ -26,6 +26,6 @@ git clone https://github.com/binexisHATT/Vscan.git
 
 cd /Vscan
 
-# make sure python3-pip is installed - sudo apt install python3-pip
+# make sure python3-pip is installed -> sudo apt install python3-pip
 pip3 install -r requirements
 ```
