@@ -10,13 +10,18 @@ try:
 except ImportError as err:
   print(f'Import Error: {err}')
 
-# -------------------------------
-'''
-purpose: parse arguments passed
-from the command line
-'''
-# -------------------------------
+
+
 def ParseArgs():
+	"""
+	Parse arguments passed in the command line
+
+	Parameters:
+		None
+
+	Returns:
+		arguments passed to command line
+	"""
 
   parser = ArgumentParser(
     description=('%s%s* SCAN FILES FOR VIRUSES WITH VSCAN *%s'%(fg(255),bg(1),attr(0))),

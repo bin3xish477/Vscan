@@ -8,13 +8,12 @@ try:
 except importError:
   print('[-] Could not find the main module')
 
-# --------------------------------------
-"""
-purpose: Vscan's interface
-"""
-# --------------------------------------
+
   
 def interface():
+	"""
+	"""
+	
 	pass
  
 

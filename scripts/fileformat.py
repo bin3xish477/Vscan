@@ -8,14 +8,10 @@ try:
 except ImportError as err:
   print(f'Import Error: {err}')
 
-# -------------------------------
-'''
-purpose: output data as CSV
-params: name of file to create,
-data to write to file
-'''
-# -------------------------------
+
 def toCsv(filename, data):
+	"""
+	"""
 
 	try:
 	  with open(filename + '.csv', newline='') as csvfile:
@@ -32,15 +28,11 @@ def toCsv(filename, data):
 
 
 
-# -------------------------------
-'''
-purpose: output data as JSON
-params: name of file to create,
-data to write to file
-'''
-# -------------------------------
-def toJson(filename, data):
 
+def toJson(filename, data):
+	"""
+	"""
+	
 	try:
 	  with open(filename + '.json') as jsonfile:
 	    # the response from VirusTotal is already in json
@@ -51,15 +43,10 @@ def toJson(filename, data):
 
 
 
-# -------------------------------
-'''
-purpose: output data as NORMAL
-params: name of file to create,
-data to write to file
-'''
-# -------------------------------
+
 def toNorm(filename, data):
-	
+	"""
+	"""
 	try:
 	  with open(filename + '.txt') as txtfile:
 	    # the data passed to this function will be
@@ -74,5 +61,13 @@ def toNorm(filename, data):
 
 ''' Handling possible file errors '''
 def FileError():
+	"""
+	Handling possible file errors
+
+	Parameters:
+		None
+	Returns:
+		None
+	"""
 	print('[-] An error occured with a file operation.' % (fg(233), bg(9), attr(0)))
 	exit(0)

@@ -26,15 +26,11 @@ except ImportError as err:
   print(f'Import Error: {err}')
 
 
-# --------------------------------------
-''' 
-purpose: perform a single scan on a file
-passed as an argument
-param: name of the file to scan
-'''
-# --------------------------------------
-def singleScan(filename, apikey, fileformat):
 
+def singleScan(filename, apikey, fileformat):
+	"""
+	"""
+	
 	# the contents of the file in bytes
 	content = open(filename, 'rb').read()
 
@@ -76,16 +72,9 @@ def singleScan(filename, apikey, fileformat):
 
 
 
-# --------------------------------------)
-''' 
-purpose: perform a mass scan on all
-files contained within a single file
-param: - file containing list of files
-				to scan for viruses
-				- VirusTotal API key
-'''
-# --------------------------------------)
 def masScan(filename, apikey, fileformat):
+	"""
+	"""
 
 	# contains list of results for each
 	# file that was scanned
@@ -143,25 +132,16 @@ def masScan(filename, apikey, fileformat):
 
 
 
-# --------------------------------------)
-''' 
-purpose: parse data for CSV file
-param: data returned from report
-'''
-# --------------------------------------)
 def forCsv(data):
-
+	"""
+	"""
 	pass
 
 
 
-# --------------------------------------)
-''' 
-purpose: parse data for JSON file
-param: data returned from report
-'''
-# --------------------------------------)
 def forJson(data):
+	"""
+	"""
 
 	# load data as JSON text
 	json_str = json.loads(data)
@@ -179,18 +159,18 @@ param: data returned from report
 '''
 # --------------------------------------)
 def forNorm(data):
+	"""
+	"""
 
 	pass
 
 
 
-# --------------------------------------)
-'''
-purpose: print out report info to console
-param: data returned from report
-'''
-# --------------------------------------)
+
 def toConsole(data):
+	"""
+	"""
+
 	# load data as JSON text
 	json_str = json.loads(data)
 
@@ -198,15 +178,9 @@ def toConsole(data):
 
 
 
-# --------------------------------------
-''' 
-purpose: generate sha256 hash to send
-as to VirusTotal to be scanned
-param: file contents read as bytes
-'''
-# --------------------------------------
 def genSha256(file_content):
-
+	"""
+	"""
 	# generating sha256 hash
 	file_hash = hashlib.sha256(file_content).hexdigest()
 	

@@ -3,7 +3,6 @@
 # *****************************  SCAN FILES  ********************************
 
 try:
-	import requests
 	import subprocess as subp
 	from os import getcwd, path, devnull
 	from sys import exit
@@ -15,17 +14,11 @@ except ImportError as err:
 API_KEY = ''
 
 
-# --------------------------------------
-''' 
-purpose: send file to get scanned
-params: - the SHA256 hash of the
-file that will be sent,
-VirusTotal api key to use,
-the name of the file to send
-'''
-# --------------------------------------
+
 def sendFile(sha256_hash, apikey, filename):
-	
+	"""
+	"""
+
 	global API_KEY
 	file_path = path.join(getcwd(), filename)
 
@@ -57,13 +50,10 @@ def sendFile(sha256_hash, apikey, filename):
 		print('[-] %s%sAn error occured sending file to get scanned%s' % (fg(233), bg(9), attr(0)))
 
 
-# ---------------------------------------
-'''
-purpose: 
-params: hash of file that will retrieved
-'''
-# ---------------------------------------
+
 def getReport(sha256_hash):
+	"""
+	"""
 
 	global API_KEY
 
