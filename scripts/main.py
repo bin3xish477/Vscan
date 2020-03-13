@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-# ************************* COMMAND & CONTROL *********************************
+# ************************* COMMAND & CONTROL ***************************
 
-__author__  = 'Alexis Rodriguez'
+__author__  = 'Alexis Rodriguez aka BinexisHATT'
 __collab__ = 'Kenny Masuda'
-__start__   = 2020_03_07
-__end__     = 2020_03_
+__start__ = 2020_03_07
+__end__ = 2020_03
 __version__ = '1.0'
-__email__   = 'rodriguez10011999@gmail.com'
+__email__ = 'rodriguez10011999@gmail.com'
 
 
 
@@ -16,12 +16,12 @@ try:
   import scanit
   import fileformat
   import hashlib
-  import sys
   import os
   import json
   from sys import exit
+  from time import sleep
   from colored import fg, bg, attr
-  from interface import interface
+  import interface
 except ImportError as err:
   print(f'Import Error: {err}')
 
@@ -43,8 +43,14 @@ def singleScan(filename, apikey, fileformat):
 
 	# send file to get scanned
 	scanit.sendFile(file_hash, apikey, filename)
+
+	# notify of wait time
+	print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
+	sleep(2)
+
 	# retrieve the files report
 	result = scanit.getReport(file_hash)
+
 	# check if the user wanted the results
 	# to be saved as a CSV file
 	if fileformat == 'csv':
@@ -86,6 +92,11 @@ def masScan(filename, apikey, fileformat):
 	all_results = []
 	# open file containing files to scan
 	with open(filename, 'r') as allfiles:
+
+		# notify of wait time
+		print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
+		sleep(2)
+
 		# this list will contain the data
 		# from each scan and will be appended
 		# to the all_results list
@@ -93,49 +104,49 @@ def masScan(filename, apikey, fileformat):
 		# loop through each file and perform
 		# a scan on each one
 		for file in allfiles:
-				# read the files contents in bytes
-				content = open(file, 'rb').read()
+			# read the files contents in bytes
+			content = open(file, 'rb').read()
 
-				# get the sha256 hash for the file
-				file_hash = genSha256(content)
+			# get the sha256 hash for the file
+			file_hash = genSha256(content)
 
-				# send the file to get scanned
-				scanit.sendFile(file_hash, apikey, filename)
-				# retrieve scan report
-				result = scanit.getReport(file_hash)
-				# check if the user wanted the results
-				# to be saved as a CSV file
-				if fileformat == 'csv':
-					result = forCsv(result)
+			# send the file to get scanned
+			scanit.sendFile(file_hash, apikey, filename)
 
-				# check if the user wanted the results
-				# to be saved as a jSON file
-				elif fileformat == 'json':
-					result = forJson(result)
+			# retrieve scan report
+			result = scanit.getReport(file_hash)
 
-				# check if the user wanted the results
-				# to be saved as a normal text file
-				elif fileformat == 'norm':
-					result = forNorm(result)
+			# append results from the scans to the all_results list
+			# to format the data with respect to the format 
+			# the user specified
+			all_results.append(result)
 
-				# if the user did not specify a fileformat option
-				# print the raw data as json to the console
-				else:
-					toConsole(result)
-				# append results from the scans to the all_results list
-				# to format the data with respect to the format 
-				# the user specified
-				all_results.append(result)
+		# check if the user wanted the results
+		# to be saved as a CSV file
+		if fileformat == 'csv':
+			all_results = forCsv(result)
 
-	# return the list containting list of result
-	return all_results
+		# check if the user wanted the results
+		# to be saved as a jSON file
+		elif fileformat == 'json':
+			all_results = forJson(result)
+
+		# check if the user wanted the results
+		# to be saved as a normal text file
+		elif fileformat == 'norm':
+			all_results = forNorm(result)
+
+		# if the user did not specify a fileformat option
+		# print the raw data as json to the console
+		else:
+			toConsole(all_results)
 
 
 
 # --------------------------------------)
 ''' 
 purpose: parse data for CSV file
-param: data returned from GET requests
+param: data returned from report
 '''
 # --------------------------------------)
 def forCsv(data):
@@ -147,21 +158,24 @@ def forCsv(data):
 # --------------------------------------)
 ''' 
 purpose: parse data for JSON file
-param: data returned from GET requests
+param: data returned from report
 '''
 # --------------------------------------)
 def forJson(data):
 
-	json_str = json.loads(str(data))
+	# load data as JSON text
+	json_str = json.loads(data)
 
-	return json_str
+	# invoke function to store data into
+	# JSON file
+	fileformat.toJson(json_str)
 
 
 
 # --------------------------------------)
 ''' 
 purpose: parse data for normal text file
-param: data returned from GET requests
+param: data returned from report
 '''
 # --------------------------------------)
 def forNorm(data):
@@ -172,12 +186,15 @@ def forNorm(data):
 
 # --------------------------------------)
 '''
+purpose: print out report info to console
+param: data returned from report
 '''
 # --------------------------------------)
 def toConsole(data):
+	# load data as JSON text
+	json_str = json.loads(data)
 
-	print(data)
-	exit(1)
+	print(json_str['data']['attributes']['last_analysis_stats'])
 
 
 
@@ -211,6 +228,7 @@ def programName():
 
 
 def main():
+
 	# get arguments
   arguments = parser.ParseArgs()
 
@@ -251,16 +269,14 @@ def main():
 
 	  # if the f argument was given
 	  if args_dict['single_file']:
-	  	scan_results = singleScan(args_dict['single_file'], args_dict['apikey'], fileformat)
+	  	singleScan(args_dict['single_file'], args_dict['apikey'], fileformat)
 
 	  # if the m argument was given
 	  elif args_dict['mass_file']:
-	  	scan_results = masScan(args_dict['mass_scan'], args_dict['apikey'], fileformat)
+	  	masScan(args_dict['mass_scan'], args_dict['apikey'], fileformat)
 
 
-
-
-
+# begin the program
 if __name__ == '__main__':
 	try:
 		main()
@@ -268,7 +284,7 @@ if __name__ == '__main__':
 	except KeyboardInterrupt:
 		try:
 			print('\n[-] %s%sProgram interrupted!%s' % (fg(233), bg(9), attr(0)))
-			sys.exit(0)
+			exit(0)
 		except SystemExit:
 			os._exit(0)
       

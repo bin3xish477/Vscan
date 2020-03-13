@@ -2,12 +2,13 @@
 
 # ****************************** PARSE ARGUMENTS ******************************
 
-
-from argparse import ArgumentParser
-from colored import fg, attr, bg
-from sys import argv, exit
-from main import programName
-
+try:
+	from argparse import ArgumentParser
+	from colored import fg, attr, bg
+	from sys import argv, exit
+	from main import programName
+except ImportError as err:
+  print(f'Import Error: {err}')
 
 # -------------------------------
 '''

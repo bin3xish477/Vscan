@@ -2,10 +2,11 @@
 
 # **************************** OUTPUT RESULT TO FILE ****************************
 
-
-import json
-import csv
-
+try:
+	import json
+	import csv
+except ImportError as err:
+  print(f'Import Error: {err}')
 
 # -------------------------------
 '''
