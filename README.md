@@ -9,6 +9,7 @@ resp = subp.run(f'curl --request POST \
   			--form file=@{file_path}', shell=True, stdout=subp.PIPE,
   			stderr=subp.DEVNULL)
 ```
+----------------------------------------------------------------------------------------------------------------------------------------
 
 ### utilizing VirusTotal's V3 API to retrieve uploaded file report
 ```python
