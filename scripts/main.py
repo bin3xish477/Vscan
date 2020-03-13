@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-# ************************* COMMAND & CONTROL ***************************
 
 __author__  = 'Alexis Rodriguez aka BinexisHATT'
 __collab__ = 'Kenny Masuda'
