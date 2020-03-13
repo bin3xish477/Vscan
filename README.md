@@ -1,7 +1,7 @@
 # Vscan
 An antivirus project
 
-### utilizing VirusTotal's V3 API to upload file
+### utilizing VirusTotal's v3 API to upload file
 ```python
 resp = subp.run(f'curl --request POST \
   			--url https://www.virustotal.com/api/v3/files \
@@ -11,7 +11,7 @@ resp = subp.run(f'curl --request POST \
 ```
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-### utilizing VirusTotal's V3 API to retrieve the uploaded file report
+### utilizing VirusTotal's v3 API to retrieve the uploaded file report
 ```python
 resp = subp.run(f'curl --request GET \
 	  		--url https://www.virustotal.com/api/v3/files/{sha256_hash} \
