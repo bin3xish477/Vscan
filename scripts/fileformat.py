@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-# **************************** OUTPUT RESULT TO FILE ****************************
 
 try:
 	import json
