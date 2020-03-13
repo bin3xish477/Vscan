@@ -6,7 +6,10 @@
 import requests
 from sys import exit
 from time import sleep
-from colored import fg, attr
+from colored import fg, attr, bg
+
+
+API_KEY = ''
 
 
 # --------------------------------------
@@ -20,37 +23,53 @@ file that will be scanned,
 to url
 '''
 # --------------------------------------
-def get_scan(sha256_hash, apikey):
+def sendFile(sha256_hash, apikey, filename):
 	
+	global API_KEY
 	# if no API key was passed prompt user for API key
 	if not apikey:
-		print('[-] You must provide a VirusTotal API key to proceed')
 		# get API key
-		apikey = input('%sPlease enter a valid VirusTotal API key:%s ' 
+		API_KEY = input('%sEnter a valid VirusTotal API key $: %s' 
 										% (fg(196), attr(0)))
-
+	else:
+		API_KEY = apikey
 	# try to make requests
 	try:
-		# url to request scan results
-		url = f'https://www.virustotal.com/vtapi/v2/file/report'
-
-		# params for requests
-		params = {'apikey': apikey, 'resource': sha256_hash}
-
-		# storing the reponse
-		resp = requests.get(url, params=params)
-		sleep(180)
-		# get returned json data
-		resp_json = resp.json()
+		with open(filename, 'rb') as scanfile:
+			# url to upload files for scanning
+			url = f'https://www.virustotal.com/api/v3/files'
+			# sending api key as data
+			data = {'x-apikey': API_KEY}
+			# storing the reponse
+			resp = requests.post(url, data=data, files=scanfile)
+			# notify of wait time
+			print('%sPlease wait 5 seconds...%s' % (fg(154), attr(0)))
+			sleep(5)
+			# get returned json data
+			resp_json = resp.json()
 
 	# if connection error occurs while making requests
 	except requests.exceptions.ConnectionError:
-		print('[-] There was a connection error!')
+		print('[-] %s%sThere was a connection error!%s' % (fg(233), bg(9), attr(0)))
 
 	# if any other issues present themselves
 	except:
-		print('[-] There was an issue sending the request to VirusTotal')
+		print('[-] %s%sThere was an issue sending the request to VirusTotal%s' % (fg(233), bg(9), attr(0)))
 
-	# return json data
-	return resp_json
 
+# --------------------------------------
+''' 
+purpose: 
+params: 
+'''
+# --------------------------------------
+def getReport(sha256_hash, filename):
+
+	global API_KEY
+	# url to retrieve file reports from
+	url = f'https://www.virustotal.com/api/v3/files/{sha256_hash}'
+	# sending api key as data
+	data = {'x-apikey': API_KEY}
+	# send GET requests
+	resp = requests.get(url, data=data)
+	

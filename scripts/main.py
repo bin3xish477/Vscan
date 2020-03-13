@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
 # ************************* COMMAND & CONTROL *********************************
-# Author : Alexis Rodriguez
-# Started : 2020-03-10
-# Ended : 2020-03-
+
+__author__ = 'Alexis Rodriguez'
+__start__ = 2020_03_07
+__end__ = 2020_03_
+__version__ = '1.0'
+__email__ = 'rodriguez10011999@gmail.com'
+
 
 
 try:
@@ -36,9 +40,10 @@ def singleScan(filename, apikey, fileformat):
 	# the file generated based on the contents of the file
 	file_hash = genSha256(content)
 
-	# scan results retrieved from VirusTotal
-	result = scanit.get_scan(file_hash, apikey)
-
+	# send file to get scanned
+	scanit.sendFile(file_hash, apikey, filename)
+	# retrieve the files report
+	result = scanit.getReport(file_hash)
 	# check if the user wanted the results
 	# to be saved as a CSV file
 	if fileformat == 'csv':
@@ -93,9 +98,10 @@ def masScan(filename, apikey, fileformat):
 				# get the sha256 hash for the file
 				file_hash = genSha256(content)
 
-				# send the hash to get scanned
-				result = scanit.get_scan(file_hash, apikey)
-
+				# send the file to get scanned
+				scanit.sendFile(file_hash, apikey, filename)
+				# retrieve scan report
+				result = scanit.getReport(file_hash)
 				# check if the user wanted the results
 				# to be saved as a CSV file
 				if fileformat == 'csv':
@@ -222,33 +228,33 @@ def main():
   }
 
   if args_dict['interface']:
-	interface()
+  	interface()
+
   else:
 	  # if no file format is passed, this variable will not change
 	  fileformat = None
-
 	  # if file format is csv
 	  if args_dict['csv']:
-		fileformat = 'csv'
+	  	fileformat = 'csv'
 
 	  # if file format is json
 	  elif args_dict['json']:
-		fileformat = 'json'
+	  	fileformat = 'json'
 
 	  # if fileformat is normal
 	  elif args_dict['norm']:
-		fileformat = 'norm'
+	  	fileformat = 'norm'
 
 
 	  """ initiating scans based on the file that was passed as an argument """
 
 	  # if the f argument was given
 	  if args_dict['single_file']:
-		scan_results = singleScan(args_dict['single_file'], args_dict['apikey'], fileformat)
+	  	scan_results = singleScan(args_dict['single_file'], args_dict['apikey'], fileformat)
 
 	  # if the m argument was given
 	  elif args_dict['mass_file']:
-		scan_results = masScan(args_dict['mass_scan'], args_dict['apikey'], fileformat)
+	  	scan_results = masScan(args_dict['mass_scan'], args_dict['apikey'], fileformat)
 
 
 

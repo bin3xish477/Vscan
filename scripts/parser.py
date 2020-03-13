@@ -72,7 +72,7 @@ def ParseArgs():
     help='name of file to create (json, csv, or nornaml)')
   # if the user wants to provide an API key as an argument
   parser.add_argument(
-  	'-a', '--apikey',
+  	'-A', '--apikey',
   	dest='apikey',
   	type=str,
   	default=None,
@@ -80,8 +80,8 @@ def ParseArgs():
   
   # if user wants an interface to interact with
   parser.add_argument(
-    '-i', '--inter',
-    action='store_action',
+    '-i', '--interface',
+    action='store_true',
     default=False,
     help='interface')
 

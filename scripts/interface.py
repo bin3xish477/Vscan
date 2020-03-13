@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-
 # ***************************** PROGRAM INTERFACE ******************************
 
-# WORK ON THIS KENNY! I NEED YOU TO REFACTOR GOOGLE'S CODE LMAOO.. remember to delete this!!!
+
 try:
  import main
 except importError:
@@ -11,12 +10,12 @@ except importError:
 
 # --------------------------------------
 """
-
+purpose: Vscan's interface
 """
 # --------------------------------------
   
 def interface():
- pass
+	pass
  
 
 

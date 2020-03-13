@@ -14,7 +14,7 @@ params: name of file to create,
 data to write to file
 '''
 # -------------------------------
-def toCSV(filename, data):
+def toCsv(filename, data):
 
 	try:
 	  with open(filename + '.csv', newline='') as csvfile:
@@ -38,7 +38,7 @@ params: name of file to create,
 data to write to file
 '''
 # -------------------------------
-def toJSON(filename, data):
+def toJson(filename, data):
 
 	try:
 	  with open(filename + '.json') as jsonfile:
@@ -57,7 +57,7 @@ params: name of file to create,
 data to write to file
 '''
 # -------------------------------
-def toNORM(filename, data):
+def toNorm(filename, data):
 	
 	try:
 	  with open(filename + '.txt') as txtfile:
@@ -73,5 +73,5 @@ def toNORM(filename, data):
 
 ''' Handling possible file errors '''
 def FileError():
-	print('[-] An error occured with a file operation.')
+	print('[-] An error occured with a file operation.' % (fg(233), bg(9), attr(0)))
 	exit(0)
