@@ -14,13 +14,11 @@ API_KEY = ''
 
 # --------------------------------------
 ''' 
-purpose: send a GET request
-to VirusTotal to retrieve the 
-scan results.
+purpose: send file to get scanned
 params: - the SHA256 hash of the
-file that will be scanned,
-- VirusTotal api key to append
-to url
+file that will be sent,
+VirusTotal api key to use,
+the name of the file to send
 '''
 # --------------------------------------
 def sendFile(sha256_hash, apikey, filename):
@@ -57,13 +55,13 @@ def sendFile(sha256_hash, apikey, filename):
 		print('[-] %s%sThere was an issue sending the request to VirusTotal%s' % (fg(233), bg(9), attr(0)))
 
 
-# --------------------------------------
+# ---------------------------------------
 ''' 
 purpose: 
-params: 
+params: hash of file that will retrieved
 '''
-# --------------------------------------
-def getReport(sha256_hash, filename):
+# ---------------------------------------
+def getReport(sha256_hash):
 
 	global API_KEY
 	# url to retrieve file reports from
@@ -72,4 +70,3 @@ def getReport(sha256_hash, filename):
 	data = {'x-apikey': API_KEY}
 	# send GET requests
 	resp = requests.get(url, data=data)
-	
