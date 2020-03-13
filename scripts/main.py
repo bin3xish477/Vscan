@@ -2,11 +2,12 @@
 
 # ************************* COMMAND & CONTROL *********************************
 
-__author__ = 'Alexis Rodriguez'
-__start__ = 2020_03_07
-__end__ = 2020_03_
+__author__  = 'Alexis Rodriguez'
+__collab__ = 'Kenny Masuda'
+__start__   = 2020_03_07
+__end__     = 2020_03_
 __version__ = '1.0'
-__email__ = 'rodriguez10011999@gmail.com'
+__email__   = 'rodriguez10011999@gmail.com'
 
 
 
