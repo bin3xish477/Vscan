@@ -2,7 +2,7 @@
 An antivirus project
 
 ### utilizing VirusTotal's V3 API to upload file
-```
+```python
 resp = subp.run(f'curl --request POST \
   			--url https://www.virustotal.com/api/v3/files \
   			--header "x-apikey: {API_KEY}" \
@@ -11,7 +11,7 @@ resp = subp.run(f'curl --request POST \
 ```
 
 ### Utilizing VirusTotal's V3 API to retrieve uploaded file report
-```
+```python
 resp = subp.run(f'curl --request GET \
 	  		--url https://www.virustotal.com/api/v3/files/{sha256_hash} \
 	  		--header "x-apikey: {API_KEY}"', shell=True, stdout=subp.PIPE,
