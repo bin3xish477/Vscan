@@ -44,7 +44,7 @@ def ParseArgs():
     '-m','--mass',
     type=str,
     dest='mass_file',
-    help='file containing multiple files to scan (50 files max)\
+    help='file containing list of files to scan (50 files max)\
            \nNote: the timing for multiple scans will depend on the quality of your API key')
   
   # if the user wants wants the output format to be pure csv
