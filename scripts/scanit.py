@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-# *****************************  SCAN FILES  ********************************
 
 try:
 	import subprocess as subp
