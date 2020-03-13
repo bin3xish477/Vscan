@@ -10,7 +10,7 @@ resp = subp.run(f'curl --request POST \
   			stderr=subp.DEVNULL)
 ```
 
-### Utilizing VirusTotal's V3 API to retrieve uploaded file report
+### utilizing VirusTotal's V3 API to retrieve uploaded file report
 ```python
 resp = subp.run(f'curl --request GET \
 	  		--url https://www.virustotal.com/api/v3/files/{sha256_hash} \
@@ -19,7 +19,7 @@ resp = subp.run(f'curl --request GET \
 ```
 
 # Installation
-```
+```bash
 cd /opt
 
 git clone https://github.com/binexisHATT/Vscan.git
