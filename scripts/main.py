@@ -2,7 +2,7 @@
 
 
 __author__  = 'Alexis Rodriguez aka BinexisHATT'
-__collab__ = 'Kenny Masuda'
+__collaborator__ = 'Kenny Masuda'
 __start__ = 2020_03_07
 __end__ = 2020_03
 __version__ = '1.0'
