@@ -36,14 +36,13 @@ def interface():
     #     - name of the output file is the user specified an output file format
     #     - ask user if they would like to email reports
     # """
-    #
-    # sendFile(API_KEY, NAME_OF_FILE)
+    # scanit.sendFile(API_KEY, NAME_OF_FILE)
     #
     # filecontent = open(filename, 'rb').read()
     #
-    # file_hash = genSha256(filecontent)
+    # file_hash = main.genSha256(filecontent)
     #
-    # result = getReport(file_hash)
+    # result = scanitgetReport(file_hash)
 
 
 
