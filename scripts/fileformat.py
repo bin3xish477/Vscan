@@ -102,5 +102,6 @@ def fileError():
 
 	# print error message
 	print('[-] %s%sAn error occured with a file operation.%s' % (fg(233), bg(9), attr(0)))
+
 	# exit program
 	exit(0)

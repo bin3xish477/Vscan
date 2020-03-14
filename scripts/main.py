@@ -225,10 +225,9 @@ def toConsole(data):
 	"""
 
 	# load data as JSON text
-	# json_str = json.loads(data)
+	json_str = json.loads(data)
 
-	print(data)
-	# print(json_str['data']['attributes']['last_analysis_stats'])
+	print(json_str['data']['attributes']['last_analysis_stats'])
 
 
 def genSha256(file_content):
