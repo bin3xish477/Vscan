@@ -42,7 +42,7 @@ def interface():
     #
     # file_hash = main.genSha256(filecontent)
     #
-    # result = scanitgetReport(file_hash)
+    # result = scanit.getReport(file_hash)
 
 
 
