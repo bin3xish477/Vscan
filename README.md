@@ -11,7 +11,7 @@ resp = subp.run(f'curl --request POST \
 ```
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-### Utilizing VirusTotal's v3 API to retrieve the uploaded file report
+#### Utilizing VirusTotal's v3 API to retrieve the uploaded file report
 ```python
 resp = subp.run(f'curl --request GET \
 	  		--url https://www.virustotal.com/api/v3/files/{sha256_hash} \
