@@ -8,12 +8,23 @@ except ImportError as err:
   print(f'Import Error: {err}')
 
 
-def toCsv(filename, data):
+def toCsv(data, outfile='results'):
 	"""
+	Writes data to a CSV file
+
+		:parameters:
+
+			data (list) : a list of lists containing chosen elements from scan result 
+										to write to CSV file
+			outfile (str) : name of output file, default = 'results'
+
+		:returns:
+
+			none
 	"""
 
 	try:
-	  with open(filename + '.csv', newline='') as csvfile:
+	  with open(outfile + '.csv', 'a+', newline='') as csvfile:
 	    # create csv writer object that will write
 	    # our data in csv format to our file
 	    writeto = csv.writer(csvfile, delimiter=',')
@@ -28,14 +39,23 @@ def toCsv(filename, data):
 
 
 
-def toJson(filename, data):
+def toJson(data, outfile='results'):
 	"""
+	Writes data to a json file
+
+	:parameters:
+
+		data (list) : scan results in JSON form
+		outfile (str) : name of output file, default = 'results'
+
+	:returns:
+
+		none
 	"""
 	
 	try:
-	  with open(filename + '.json') as jsonfile:
-	    # the response from VirusTotal is already in json
-	    # so no need for conversions
+	  with open(outfile + '.json', 'a+') as jsonfile:
+	    # dump JSON data to JSON FILE
 	    json.dump(data, jsonfile)
 	except:
 		FileError()
@@ -43,14 +63,24 @@ def toJson(filename, data):
 
 
 
-def toNorm(filename, data):
+def toNorm(data, outfile='results'):
 	"""
+	Writes data to a text file
+
+	:parameters:
+
+		outfile (str) : name of output file, default = 'results'
+		data (dictionary) : dictionary containing selected data
+
+	:returns:
+
+		none
 	"""
+
 	try:
-	  with open(filename + '.txt') as txtfile:
-	    # the data passed to this function will be
-	    # a dictionary and we'll simply traverse it
-	    # and print key,value pairs seperated by colons
+	  with open(outfile + '.txt', 'a+') as txtfile:
+	  	# retrieve keys and values from dictionary
+	  	# and write them to the text file
 	    for key, val in data:
 	      txtfile.write(key + ': ' + val, end='\n')
 	except:
@@ -58,15 +88,18 @@ def toNorm(filename, data):
 
 
 
-''' Handling possible file errors '''
 def FileError():
 	"""
-	Handling possible file errors
+	Handles possible file errors
 
-	Parameters:
-		None
-	Returns:
-		None
+		:parameters:
+			None
+
+		:returns:
+			None
 	"""
+
+	# print error message
 	print('[-] An error occured with a file operation.' % (fg(233), bg(9), attr(0)))
+	# exit program
 	exit(0)

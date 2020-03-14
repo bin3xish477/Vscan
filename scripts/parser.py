@@ -11,15 +11,15 @@ except ImportError as err:
 
 
 
-def ParseArgs():
+def parseArgs():
 	"""
 	Parse arguments passed in the command line
 
-	Parameters:
-		None
+		:parameters:
+			None
 
-	Returns:
-		arguments passed to command line
+		:returns:
+			arguments passed to command line
 	"""
 
   parser = ArgumentParser(

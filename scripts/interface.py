@@ -10,6 +10,15 @@ except importError:
   
 def interface():
 	"""
+	Creates Vscan's interface
+
+		:parameters:
+			
+			none
+
+		:returns:
+
+			none
 	"""
 	
 	pass
