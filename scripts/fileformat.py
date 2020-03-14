@@ -4,6 +4,7 @@
 try:
 	import json
 	import csv
+	from colored import fg, bg, attr
 except ImportError as err:
   print(f'Import Error: {err}')
 
@@ -14,7 +15,7 @@ def toCsv(data, outfile='results'):
 
 		:parameters:
 
-			data (list) : a list of lists containing chosen elements from scan result 
+			data (list) : a list of lists containing chosen elements from scan result
 										to write to CSV file
 			outfile (str) : name of output file, default = 'results'
 
@@ -28,7 +29,7 @@ def toCsv(data, outfile='results'):
 	    # create csv writer object that will write
 	    # our data in csv format to our file
 	    writeto = csv.writer(csvfile, delimiter=',')
-	    
+
 	    # the data passed to this function should be
 	    # a list containing lists, where each embedded list
 	    # will create its own row within the csv file
@@ -52,7 +53,7 @@ def toJson(data, outfile='results'):
 
 		none
 	"""
-	
+
 	try:
 	  with open(outfile + '.json', 'a+') as jsonfile:
 	    # dump JSON data to JSON FILE
@@ -100,6 +101,6 @@ def FileError():
 	"""
 
 	# print error message
-	print('[-] An error occured with a file operation.' % (fg(233), bg(9), attr(0)))
+	print('[-] %s%sAn error occured with a file operation.%s' % (fg(233), bg(9), attr(0)))
 	# exit program
 	exit(0)

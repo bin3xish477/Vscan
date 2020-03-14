@@ -3,7 +3,7 @@
 
 try:
 	import subprocess as subp
-	from os import getcwd, path, devnull
+	from os import path, devnull
 	from sys import exit
 	from colored import fg, attr, bg
 except ImportError as err:
@@ -29,7 +29,9 @@ def sendFile(apikey, filename):
 	"""
 
 	global API_KEY
-	file_path = path.join(getcwd(), filename)
+
+	# get absolute path of file
+	file_path = path.abspath(filename)
 
 	# if no API key was passed prompt user for API key
 	if not apikey:
@@ -49,10 +51,6 @@ def sendFile(apikey, filename):
   					--header "x-apikey: {API_KEY}" \
   					--form file=@{file_path}', shell=True, stdout=subp.PIPE,
   					stderr=subp.DEVNULL)
-
-	# if connection error occurs while making requests
-	except requests.exceptions.ConnectionError:
-		print('[-] %s%sThere was a connection error!%s' % (fg(233), bg(9), attr(0)))
 
 	# if any other issues present themselves
 	except:
