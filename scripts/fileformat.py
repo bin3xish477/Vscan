@@ -25,17 +25,17 @@ def toCsv(data, outfile='results'):
 	"""
 
 	try:
-	  with open(outfile + '.csv', 'a+', newline='') as csvfile:
-	    # create csv writer object that will write
-	    # our data in csv format to our file
-	    writeto = csv.writer(csvfile, delimiter=',')
+		with open(outfile + '.csv', 'a+', newline='') as csvfile:
+			# create csv writer object that will write
+			# our data in csv format to our file
+			writeto = csv.writer(csvfile, delimiter=',')
 
-	    # the data passed to this function should be
-	    # a list containing lists, where each embedded list
-	    # will create its own row within the csv file
-	    writeto.writerows(data)
+			# the data passed to this function should be
+			# a list containing lists, where each embedded list
+			# will create its own row within the csv file
+			writeto.writerows(data)
 	except:
-		FileError()
+		fileError()
 
 
 
@@ -55,11 +55,11 @@ def toJson(data, outfile='results'):
 	"""
 
 	try:
-	  with open(outfile + '.json', 'a+') as jsonfile:
-	    # dump JSON data to JSON FILE
-	    json.dump(data, jsonfile)
+		with open(outfile + '.json', 'a+') as jsonfile:
+			# dump JSON data to JSON FILE
+			json.dump(data, jsonfile)
 	except:
-		FileError()
+		fileError()
 
 
 
@@ -79,17 +79,17 @@ def toNorm(data, outfile='results'):
 	"""
 
 	try:
-	  with open(outfile + '.txt', 'a+') as txtfile:
-	  	# retrieve keys and values from dictionary
-	  	# and write them to the text file
-	    for key, val in data:
-	      txtfile.write(key + ': ' + val, end='\n')
+		with open(outfile + '.txt', 'a+') as txtfile:
+			# retrieve keys and values from dictionary
+			# and write them to the text file
+			for key, val in data:
+				txtfile.write(key + ': ' + val, end='\n')
 	except:
-		FileError()
+		fileError()
 
 
 
-def FileError():
+def fileError():
 	"""
 	Handles possible file errors
 

@@ -7,7 +7,7 @@ try:
 	from sys import exit
 	from colored import fg, attr, bg
 except ImportError as err:
-  print(f'Import Error: {err}')
+	print(f'Import Error: {err}')
 
 
 # VIRUSTOTAL API KEY
@@ -47,10 +47,9 @@ def sendFile(apikey, filename):
 		DEVNULL = open(devnull, 'w')
 		# use curl to send the file to be scanned
 		resp = subp.run(f'curl --request POST \
-  					--url https://www.virustotal.com/api/v3/files \
-  					--header "x-apikey: {API_KEY}" \
-  					--form file=@{file_path}', shell=True, stdout=subp.PIPE,
-  					stderr=subp.DEVNULL)
+		--url https://www.virustotal.com/api/v3/files \
+		--header "x-apikey: {API_KEY}" \
+		--form file=@{file_path}', shell=True, stdout=subp.PIPE, stderr=subp.DEVNULL)
 
 	# if any other issues present themselves
 	except:
@@ -78,9 +77,8 @@ def getReport(sha256_hash):
 		DEVNULL = open(devnull, 'w')
 		# make GET request with curl to get file report
 		resp = subp.run(f'curl --request GET \
-	  				--url https://www.virustotal.com/api/v3/files/{sha256_hash} \
-	  				--header "x-apikey: {API_KEY}"', shell=True, stdout=subp.PIPE,
-	  				stderr=subp.DEVNULL)
+		--url https://www.virustotal.com/api/v3/files/{sha256_hash} \
+		--header "x-apikey: {API_KEY}"', shell=True, stdout=subp.PIPE, stderr=subp.DEVNULL)
 
 	except:
 		print('[-] %s%sAn error occured retrieving scan report%s' % (fg(233), bg(9), attr(0)))

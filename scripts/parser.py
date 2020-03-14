@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-
 try:
-	from argparse import ArgumentParser
-	from colored import fg, attr, bg
-	from sys import argv, exit
-	from main import programName
-except ImportError as err:
-  print(f'Import Error: {err}')
+  from argparse import ArgumentParser
+  from colored import fg, attr, bg
+  from sys import argv, exit
+  from main import programName
+except ImportError as err:\
+    print(f'Import Error: {err}')
 
 
 
@@ -75,7 +74,7 @@ def parseArgs():
   # if the user wants to provide an API key as an argument
   parser.add_argument(
   	'-A', '--apikey',
-  	dest='apikey',
+  	dest='api_key',
   	type=str,
   	default=None,
   	help='VirusTotal API key to use for scan requests')
