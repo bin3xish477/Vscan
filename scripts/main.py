@@ -10,6 +10,7 @@ __Email__ = 'rodriguez10011999@gmail.com'
 
 
 
+
 try:
 	import scanit
 	import fileformat
@@ -18,11 +19,15 @@ try:
 	import json
 	import parser
 	import interface
+	import smtplib
+	from email.message import EmailMessage
+	from getpass import getpass
 	from sys import exit
 	from time import sleep
 	from colored import fg, bg, attr
 except ImportError as err:
 	print(f'Import Error: {err}')
+
 
 
 
@@ -78,6 +83,7 @@ def singleScan(filename, apikey, fileformat, outfile=None):
 	# print the raw data as json to the console
 	else:
 		toConsole(result)
+
 
 
 
@@ -154,6 +160,7 @@ def masScan(filename, apikey, fileformat, outfile=None):
 
 
 
+
 def forCsv(data, outfile):
 	"""
 	Converts the data received from VirusTotal into list containing desired elements
@@ -170,6 +177,7 @@ def forCsv(data, outfile):
 	"""
 
 	pass
+
 
 
 
@@ -238,6 +246,7 @@ def toConsole(data):
 
 
 
+
 def genSha256(file_content):
 	"""
 	Generates SHA256 hash of a specific files contents
@@ -257,15 +266,56 @@ def genSha256(file_content):
 
 
 
-def programName():
-	print('''
-██╗   ██╗███████╗ ██████╗ █████╗ ███╗   ██╗    ██╗   ██╗ ██╗    ██████╗
-██║   ██║██╔════╝██╔════╝██╔══██╗████╗  ██║    ██║   ██║███║   ██╔═████╗
-██║   ██║███████╗██║     ███████║██╔██╗ ██║    ██║   ██║╚██║   ██║██╔██║
-╚██╗ ██╔╝╚════██║██║     ██╔══██║██║╚██╗██║    ╚██╗ ██╔╝ ██║   ████╔╝██║
- ╚████╔╝ ███████║╚██████╗██║  ██║██║ ╚████║     ╚████╔╝  ██║██╗╚██████╔╝
-  ╚═══╝  ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝      ╚═══╝   ╚═╝╚═╝ ╚═════╝
-''')
+def sendReport():
+	"""
+	Sends files to an gmail account
+
+		:parameters:
+			none
+		
+		:returns:
+			none
+	"""
+
+	# get files to be sent as email attachment
+	FILES = input('%s\nEnter file/s to send seperated by commas $:%s ' %(fg(252), attr(0))).split(',')
+
+	# an object to easily craft an email
+	MESSAGE = EmailMessage()
+
+	SENDER = input('%sEnter your gmail account $:%s ' %(fg(75), attr(0)))
+	MESSAGE['From'] = SENDER
+	# the getpass method will allow a user to enter a password
+	# without having to expose password in the clear
+	PASSWORD = getpass('%sEnter your password $:%s ' %(fg(190), attr(0)))
+	MESSAGE['To'] = input('%sEnter the recipient\'s email account $:%s ' %(fg(75), attr(0)))
+	MESSAGE['Subject'] = input('%sEnter the subject of your email $:%s ' %(fg(129), attr(0)))
+	MESSAGE.set_content('Vscan v1.0 file report/s')
+
+	# loop through list of files to send in email
+	for file in FILES:
+		with open(file, 'rb') as file_to_send:
+			file_bytes = file_to_send.read()
+			# get the file object name property
+			file_name = file_to_send.name
+			# attach file to the email we are crafting
+			MESSAGE.add_attachment(
+				file_bytes,
+				maintype='application',
+				subtype='octet-stream',
+				filename=file_name)
+
+
+	with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+		try:
+			# login in to gmail account
+			smtp.login(SENDER, PASSWORD)
+			# send email
+			smtp.send_message(MESSAGE)
+		# handle authentication error
+		except smtplib.SMTPAuthenticationError:
+			print('[-] %s%sThere was an error authenticating to your account%s' % (fg(233), bg(9), attr(0)))
+
 
 
 
@@ -283,54 +333,80 @@ def main():
 		'norm':        arguments.norm,
 		'output_file': arguments.output_file,
 		'apikey':      arguments.apikey,
-		'interface':   arguments.interface
+		'interface':   arguments.interface,
+		'email':			 arguments.email
   }
 
-	if args_dict['interface']:
-		interface.interface()
+	# if no file arguments were given
+	if not args_dict['single_file'] and not args_dict['mass_file']:
+		print('[-] no file arguments were passed... please try again!')
+		exit(0)
 
 	else:
-		# if no file format is passed, this variable will not change
-		fileformat = None
-		# # if file format is csv
-		if args_dict['csv']:
-			fileformat = 'csv'
-		# if file format is json
-		elif args_dict['json']:
-			fileformat = 'json'
-		# if fileformat is normal
-		elif args_dict['norm']:
-			fileformat = 'norm'
+		if args_dict['interface']:
+			interface.interface()
 
-	if fileformat == None:
-		if args_dict['single_file']:
-			singleScan(
-				args_dict['single_file'], # function arguments
-				args_dict['apikey'],
-				fileformat)
-
-		 # if the m argument was given
 		else:
-			masScan(
-				args_dict['mass_scan'], # function arguments
-				args_dict['apikey'],
-				fileformat)
+			# if no file format is passed, this variable will not change
+			fileformat = None
+			# # if file format is csv
+			if args_dict['csv']:
+				fileformat = 'csv'
+			# if file format is json
+			elif args_dict['json']:
+				fileformat = 'json'
+			# if fileformat is normal
+			elif args_dict['norm']:
+				fileformat = 'norm'
 
-	else:
-		if args_dict['single_file']:
-			singleScan(
-				args_dict['single_file'], # function arguments
-				args_dict['apikey'],
-				fileformat,
-				args_dict['output_file'])
+		if fileformat == None:
+			if args_dict['single_file']:
+				singleScan(
+					args_dict['single_file'], # function arguments
+					args_dict['apikey'],
+					fileformat)
 
-		# if the m argument was given
+			# if the m argument was given
+			else:
+				masScan(
+					args_dict['mass_file'], # function arguments
+					args_dict['apikey'],
+					fileformat)
+
 		else:
-			masScan(
-				args_dict['mass_scan'], # function arguments 
-				args_dict['apikey'],
-				fileformat,
-				args_dict['output_file'])
+			if args_dict['single_file']:
+				singleScan(
+					args_dict['single_file'], # function arguments
+					args_dict['apikey'],
+					fileformat,
+					args_dict['output_file'])
+
+			# if the m argument was given
+			else:
+				masScan(
+					args_dict['mass_file'], # function arguments 
+					args_dict['apikey'],
+					fileformat,
+					args_dict['output_file'])
+
+	# if arguments to email was passed, invoke function
+	# to send email
+	if args_dict['email']:
+		sendReport()
+
+
+
+
+def programName():
+	print('''
+██╗   ██╗███████╗ ██████╗ █████╗ ███╗   ██╗    ██╗   ██╗ ██╗    ██████╗
+██║   ██║██╔════╝██╔════╝██╔══██╗████╗  ██║    ██║   ██║███║   ██╔═████╗
+██║   ██║███████╗██║     ███████║██╔██╗ ██║    ██║   ██║╚██║   ██║██╔██║
+╚██╗ ██╔╝╚════██║██║     ██╔══██║██║╚██╗██║    ╚██╗ ██╔╝ ██║   ████╔╝██║
+ ╚████╔╝ ███████║╚██████╗██║  ██║██║ ╚████║     ╚████╔╝  ██║██╗╚██████╔╝
+  ╚═══╝  ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝      ╚═══╝   ╚═╝╚═╝ ╚═════╝
+''')
+
 
 
 

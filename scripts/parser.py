@@ -87,9 +87,17 @@ def parseArgs():
     default=False,
     help='interface')
 
+  # if user wants to send report files to an email account
+  parser.add_argument(
+    '-e', '--email',
+    action='store_true',
+    default=False,
+    help='send an email containing files of your choice'
+  )
+
   # check if no args were passed
   # or if too many args were passed
-  if len(argv) == 1 or len(argv) >= 5:
+  if len(argv) == 1 or len(argv) > 5:
   	# show program banner
   	programName()
   	# print help menu
