@@ -227,7 +227,43 @@ def toConsole(data):
 	# load data as JSON text
 	json_str = json.loads(data)
 
-	print(json_str['data']['attributes']['last_analysis_stats'])
+	# get the data that we are most concerned with
+	antivirus_results = json_str['data']['attributes']['last_analysis_results']
+
+	print('[--------Scan Report-------]')
+	for engine in antivirus_results.keys():
+		print('+--------------------------+')
+		print(('\n%sAntivirus Engine:%s ' % (fg(201), attr(0))), str(antivirus_results[engine]['engine_name']))
+		print(('%sEngine Version:%s ' % (fg(112), attr(0))), str(antivirus_results[engine]['engine_version']))
+		print(('%sEngine Update:%s ' % (fg(117), attr(0))), str(antivirus_results[engine]['engine_update']))
+		print(('%sCategory:%s ' % (fg(88), attr(0))), str(antivirus_results[engine]['category']))
+		print(('%sMethod:%s ' % (fg(130), attr(0))), str(antivirus_results[engine]['method']))
+		print(('%sResult:%s ' % (fg(11), attr(0))), str(antivirus_results[engine]['result']), end='\n\n')
+
+	print('+--------------------------+')
+
+	# get final statistics from the files report
+	file_report_stats = json_str['data']['attributes']['last_analysis_stats']
+
+	print('[--------File Stats-------]')
+	print(('\n%sHarmless:%s ' % (fg(94), attr(0))), file_report_stats['harmless'])
+	print(('%sMalicious:%s ' % (fg(94), attr(0))), file_report_stats['malicious'])
+	print(('%sSuspicious:%s ' % (fg(94), attr(0))), file_report_stats['suspicious'])
+	print(('%sTimeout: %s ' % (fg(94), attr(0))), file_report_stats['timeout'])
+	print(('%sType-unsupported:%s ' % (fg(94), attr(0))), file_report_stats['type-unsupported'])
+	print(('%sUndetected:%s ' % (fg(94), attr(0))), file_report_stats['undetected'])
+
+	# for specific file metadata
+	file_meta = json_str['data']['attributes']
+
+	print('[--------File Metadata-------]')
+	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
+	print(('%sFirst submitted:%s ' % (fg(201), attr(0))), file_meta['first_submission_date'])
+	print(('%s:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
+	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
+	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
+	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
+
 
 
 def genSha256(file_content):
@@ -259,18 +295,18 @@ def sendReport():
 	"""
 
 	# get files to be sent as email attachment
-	FILES = input('%s\nEnter file/s to send seperated by commas $:%s ' %(fg(252), attr(0))).split(',')
+	FILES = input('%s\nEnter file/s to send seperated by commas $:%s ' % (fg(252), attr(0))).split(',')
 
 	# an object to easily craft an email
 	MESSAGE = EmailMessage()
 
-	SENDER = input('%sEnter your gmail account $:%s ' %(fg(75), attr(0)))
+	SENDER = input('%sEnter your gmail account $:%s ' % (fg(75), attr(0)))
 	MESSAGE['From'] = SENDER
 	# the getpass method will allow a user to enter a password
 	# without having to expose password in the clear
-	PASSWORD = getpass('%sEnter your password $:%s ' %(fg(190), attr(0)))
-	MESSAGE['To'] = input('%sEnter the recipient\'s email account $:%s ' %(fg(75), attr(0)))
-	MESSAGE['Subject'] = input('%sEnter the subject of your email $:%s ' %(fg(129), attr(0)))
+	PASSWORD = getpass('%sEnter your password $:%s ' % (fg(190), attr(0)))
+	MESSAGE['To'] = input('%sEnter the recipient\'s email account $:%s ' % ( fg(75), attr(0)))
+	MESSAGE['Subject'] = input('%sEnter the subject of your email $:%s ' % (fg(129), attr(0)))
 	MESSAGE.set_content('Vscan v1.0 file report/s')
 
 	# loop through list of files to send in email
