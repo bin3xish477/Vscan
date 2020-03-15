@@ -230,7 +230,7 @@ def toConsole(data):
 	# get the data that we are most concerned with
 	antivirus_results = json_str['data']['attributes']['last_analysis_results']
 
-	print('[--------Scan Report-------]')
+	print('[--------Scan Report-------]')  # add some color to this
 	for engine in antivirus_results.keys():
 		print('+--------------------------+')
 		print(('\n%sAntivirus Engine:%s ' % (fg(201), attr(0))), str(antivirus_results[engine]['engine_name']))
@@ -240,23 +240,23 @@ def toConsole(data):
 		print(('%sMethod:%s ' % (fg(130), attr(0))), str(antivirus_results[engine]['method']))
 		print(('%sResult:%s ' % (fg(11), attr(0))), str(antivirus_results[engine]['result']), end='\n\n')
 
-	print('+--------------------------+')
+	print('+--------------------------+\n\n')
 
 	# get final statistics from the files report
 	file_report_stats = json_str['data']['attributes']['last_analysis_stats']
 
-	print('[--------File Stats-------]')
+	print('[--------File Stats-------]')  # add some color to this
 	print(('\n%sHarmless:%s ' % (fg(94), attr(0))), file_report_stats['harmless'])
 	print(('%sMalicious:%s ' % (fg(94), attr(0))), file_report_stats['malicious'])
 	print(('%sSuspicious:%s ' % (fg(94), attr(0))), file_report_stats['suspicious'])
 	print(('%sTimeout: %s ' % (fg(94), attr(0))), file_report_stats['timeout'])
 	print(('%sType-unsupported:%s ' % (fg(94), attr(0))), file_report_stats['type-unsupported'])
-	print(('%sUndetected:%s ' % (fg(94), attr(0))), file_report_stats['undetected'])
+	print(('%sUndetected:%s ' % (fg(94), attr(0))), file_report_stats['undetected'], end='\n\n')
 
 	# for specific file metadata
 	file_meta = json_str['data']['attributes']
 
-	print('[--------File Metadata-------]')
+	print('[--------File Metadata-------]')  # add some color to this
 	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
 	print(('%sFirst submitted:%s ' % (fg(201), attr(0))), file_meta['first_submission_date'])
 	print(('%s:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
