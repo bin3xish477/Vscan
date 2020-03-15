@@ -230,39 +230,40 @@ def toConsole(data):
 	# get the data that we are most concerned with
 	antivirus_results = json_str['data']['attributes']['last_analysis_results']
 
-	print('[--------Scan Report-------]')  # add some color to this
+	print('[--------%sScan Report%s-------]' % (fg(9), attr(0)))  # add some color to this
 	for engine in antivirus_results.keys():
-		print('+--------------------------+')
+		print('+--------------------------------------+')
 		print(('\n%sAntivirus Engine:%s ' % (fg(201), attr(0))), str(antivirus_results[engine]['engine_name']))
-		print(('%sEngine Version:%s ' % (fg(112), attr(0))), str(antivirus_results[engine]['engine_version']))
-		print(('%sEngine Update:%s ' % (fg(117), attr(0))), str(antivirus_results[engine]['engine_update']))
-		print(('%sCategory:%s ' % (fg(88), attr(0))), str(antivirus_results[engine]['category']))
-		print(('%sMethod:%s ' % (fg(130), attr(0))), str(antivirus_results[engine]['method']))
-		print(('%sResult:%s ' % (fg(11), attr(0))), str(antivirus_results[engine]['result']), end='\n\n')
-
-	print('+--------------------------+\n\n')
+		print(('%s  Engine Version:%s ' % (fg(112), attr(0))), str(antivirus_results[engine]['engine_version']))
+		print(('%s   Engine Update:%s ' % (fg(117), attr(0))), str(antivirus_results[engine]['engine_update']))
+		print(('%s        Category:%s ' % (fg(88), attr(0))), str(antivirus_results[engine]['category']))
+		print(('%s          Method:%s ' % (fg(130), attr(0))), str(antivirus_results[engine]['method']))
+		print(('%s          Result:%s ' % (fg(11), attr(0))), str(antivirus_results[engine]['result']), end='\n\n')
 
 	# get final statistics from the files report
 	file_report_stats = json_str['data']['attributes']['last_analysis_stats']
 
-	print('[--------File Stats-------]')  # add some color to this
-	print(('\n%sHarmless:%s ' % (fg(94), attr(0))), file_report_stats['harmless'])
-	print(('%sMalicious:%s ' % (fg(94), attr(0))), file_report_stats['malicious'])
-	print(('%sSuspicious:%s ' % (fg(94), attr(0))), file_report_stats['suspicious'])
-	print(('%sTimeout: %s ' % (fg(94), attr(0))), file_report_stats['timeout'])
-	print(('%sType-unsupported:%s ' % (fg(94), attr(0))), file_report_stats['type-unsupported'])
-	print(('%sUndetected:%s ' % (fg(94), attr(0))), file_report_stats['undetected'], end='\n\n')
+	print('[------------%sFile Stats%s-----------]' % (fg(9), attr(0)))
+	print(('%sFailure:%s ' % (fg(124), attr(0))), file_report_stats['failure'])
+	print(('%sHarmless:%s ' % (fg(124), attr(0))), file_report_stats['harmless'])
+	print(('%sMalicious:%s ' % (fg(124), attr(0))), file_report_stats['malicious'])
+	print(('%sSuspicious:%s ' % (fg(124), attr(0))), file_report_stats['suspicious'])
+	print(('%sTimeout: %s ' % (fg(124), attr(0))), file_report_stats['timeout'])
+	print(('%sType-unsupported:%s ' % (fg(124), attr(0))), file_report_stats['type-unsupported'])
+	print(('%sUndetected:%s ' % (fg(124), attr(0))), file_report_stats['undetected'], end='\n\n')
 
 	# for specific file metadata
 	file_meta = json_str['data']['attributes']
 
-	print('[--------File Metadata-------]')  # add some color to this
-	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
+	print('[----------------------%sFile Metadata%s----------------------]' % (fg(9), attr(0)))
 	print(('%sFirst submitted:%s ' % (fg(201), attr(0))), file_meta['first_submission_date'])
-	print(('%s:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
-	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
-	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
-	print(('%sFirst seen in the wild date:%s ' % (fg(201), attr(0))), file_meta['first_seen_itw_date'])
+	print(('%sLast Submission Date:%s ' % (fg(201), attr(0))), file_meta['last_submission_date'])
+	print(('%sMagic:%s ' % (fg(201), attr(0))), file_meta['magic'])
+	print(('%sMd5 hash:%s ' % (fg(201), attr(0))), file_meta['md5'])
+	print(('%sSHA1 hash:%s ' % (fg(201), attr(0))), file_meta['sha1'])
+	print(('%sSHA256 hash:%s ' % (fg(201), attr(0))), file_meta['sha256'])
+	print(('%sTags:%s ' % (fg(201), attr(0))), file_meta['tags'])
+	print(('%sSize:%s ' % (fg(201), attr(0))), file_meta['size'])
 
 
 
