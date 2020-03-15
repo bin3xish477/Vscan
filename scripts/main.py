@@ -26,7 +26,7 @@ except ImportError as err:
 	print(f'Import Error: {err}')
 
 
-def singleScan(file_name, apikey, file_format, outfile=None):
+def singleScan(file_name, apikey, file_format, out_file=None):
 	"""
 	Sends and scans file using VirusTotal's API
 
@@ -62,17 +62,17 @@ def singleScan(file_name, apikey, file_format, outfile=None):
 	# check if the user wanted the results
 	# to be saved as a CSV file
 	if file_format == 'csv':
-		forCsv(result, outfile)
+		forCsv(result, out_file)
 
 	# check if the user wanted the results
 	# to be saved as a jSON file
 	elif file_format == 'json':
-		forJson(result, outfile)
+		forJson(result, out_file)
 
 	# check if the user wanted the results
 	# to be saved as a normal text file
 	elif file_format == 'norm':
-		forNorm(result, outfile)
+		forNorm(result, out_file)
 
 	# if the user did not specify a fileformat option
 	# print the raw data as json to the console
@@ -80,7 +80,7 @@ def singleScan(file_name, apikey, file_format, outfile=None):
 		toConsole(result)
 
 
-def masScan(file_name, api_key, file_format, outfile=None):
+def masScan(file_name, api_key, file_format, out_file=None):
 	"""
 	Sends and scans multiple files (max is 50) using VirusTotal's API
 
@@ -101,7 +101,7 @@ def masScan(file_name, api_key, file_format, outfile=None):
 	# file that was scanned
 	all_results = []
 	# open file containing files to scan
-	with open(file_name, 'r') as allfiles:
+	with open(file_name, 'r') as all_files:
 
 		# notify of wait time
 		print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
@@ -113,7 +113,7 @@ def masScan(file_name, api_key, file_format, outfile=None):
 		result = []
 		# loop through each file and perform
 		# a scan on each one
-		for file in allfiles:
+		for file in all_files:
 			# read the files contents in bytes
 			content = open(file, 'rb').read()
 
@@ -134,17 +134,17 @@ def masScan(file_name, api_key, file_format, outfile=None):
 		# check if the user wanted the results
 		# to be saved as a CSV file
 		if file_format == 'csv':
-			forCsv(all_results, outfile)
+			forCsv(all_results, out_file)
 
 		# check if the user wanted the results
 		# to be saved as a jSON file
 		elif file_format == 'json':
-			forJson(all_results, outfile)
+			forJson(all_results, out_file)
 
 		# check if the user wanted the results
 		# to be saved as a normal text file
 		elif file_format == 'norm':
-			forNorm(all_results, outfile)
+			forNorm(all_results, out_file)
 
 		# if the user did not specify a fileformat option
 		# print the raw data as json to the console
@@ -166,9 +166,10 @@ def forCsv(data, out_file):
 
 			none
 	"""
-
 	
-
+	results = []
+	
+	
 
 def forJson(data, out_file):
 	"""
@@ -190,8 +191,9 @@ def forJson(data, out_file):
 
 	# invoke function to store data into
 	# JSON file
-	fileformat.toJson(json_str)
+	fileformat.toJson(json_str, out_file)
 
+	
 def forNorm(data, out_file):
 	"""
 	Converts the data received from VirusTotral file report into data
