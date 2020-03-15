@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-__author__ = 'Alexis Rodriguez aka BinexisHATT'
+__author__ = 'Alexis Rodriguez'
 __collaborator__ = 'Kenny Masuda'
 __start__ = 2020_03_07
 __end__ = 2020_03
@@ -230,7 +230,7 @@ def toConsole(data):
 	# get the data that we are most concerned with
 	antivirus_results = json_str['data']['attributes']['last_analysis_results']
 
-	print('[--------%sScan Report%s-------]' % (fg(9), attr(0)))  # add some color to this
+	print('[--------------%sScan Report%s-------------]' % (fg(9), attr(0)))  # add some color to this
 	for engine in antivirus_results.keys():
 		print('+--------------------------------------+')
 		print(('\n%sAntivirus Engine:%s ' % (fg(201), attr(0))), str(antivirus_results[engine]['engine_name']))
@@ -244,7 +244,7 @@ def toConsole(data):
 	file_report_stats = json_str['data']['attributes']['last_analysis_stats']
 
 	print('[------------%sFile Stats%s-----------]' % (fg(9), attr(0)))
-	print(('%sFailure:%s ' % (fg(124), attr(0))), file_report_stats['failure'])
+	print(('%s\nFailure:%s ' % (fg(124), attr(0))), file_report_stats['failure'])
 	print(('%sHarmless:%s ' % (fg(124), attr(0))), file_report_stats['harmless'])
 	print(('%sMalicious:%s ' % (fg(124), attr(0))), file_report_stats['malicious'])
 	print(('%sSuspicious:%s ' % (fg(124), attr(0))), file_report_stats['suspicious'])
@@ -256,7 +256,7 @@ def toConsole(data):
 	file_meta = json_str['data']['attributes']
 
 	print('[----------------------%sFile Metadata%s----------------------]' % (fg(9), attr(0)))
-	print(('%sFirst submitted:%s ' % (fg(201), attr(0))), file_meta['first_submission_date'])
+	print(('%s\nFirst submitted:%s ' % (fg(201), attr(0))), file_meta['first_submission_date'])
 	print(('%sLast Submission Date:%s ' % (fg(201), attr(0))), file_meta['last_submission_date'])
 	print(('%sMagic:%s ' % (fg(201), attr(0))), file_meta['magic'])
 	print(('%sMd5 hash:%s ' % (fg(201), attr(0))), file_meta['md5'])
