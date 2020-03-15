@@ -26,7 +26,8 @@ def toCsv(data, outfile='results'):
 
 	try:
 		with open(outfile + '.csv', 'a+', newline='') as csvfile:
-			csffile.write('[------------Scan Report-------------]')
+			csvfile.write('<-------------Scan Report------------->\n')
+			csvfile.write('   Format = Antivirus engine, Result\n\n')
 			# create csv writer object that will write
 			# our data in csv format to our file
 			writeto = csv.writer(csvfile, delimiter=',')
@@ -82,7 +83,7 @@ def toNorm(data, outfile='results'):
 
 	try:
 		with open(outfile + '.txt', 'a+') as txtfile:
-			txtfile..write('[------------Scan Report-------------]')
+			txtfile.write('[------------Scan Report-------------]')
 			# retrieve keys and values from dictionary
 			# and write them to the text file
 			for key, val in data:

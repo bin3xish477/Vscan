@@ -168,18 +168,19 @@ def forCsv(data, out_file):
 	"""
 	
 	results = []
-	
+	to_append = []
+  
 	json_str = json.loads(data)
 	
 	antivirus_results = json_str['data']['attributes']['last_analysis_results']
 	
 	for engine in antivirus_results.keys():
-		to_append = []
-		to_append.append(antivirus_results[engine]['engine_nam']
-		to_append.append(antivirus_results[engine]['category']
-		results.append(to_append)
+		to_append.append(antivirus_results[engine]['engine_name'])
+		to_append.append(antivirus_results[engine]['category'])
 	
+	results.append(to_append)
 	
+	fileformat.toCsv(results)
 
 def forJson(data, out_file):
 	"""
