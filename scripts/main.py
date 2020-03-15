@@ -54,7 +54,7 @@ def singleScan(file_name, apikey, file_format, out_file=None):
 
 	# notify of wait time
 	print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
-	sleep(2)
+	sleep(1)
 
 	# retrieve the files report
 	result = scanit.getReport(file_hash)
@@ -105,7 +105,7 @@ def masScan(file_name, api_key, file_format, out_file=None):
 
 		# notify of wait time
 		print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
-		sleep(2)
+		sleep(0.1)
 
 		# this list will contain the data
 		# from each scan and will be appended
@@ -168,6 +168,16 @@ def forCsv(data, out_file):
 	"""
 	
 	results = []
+	
+	json_str = json.loads(data)
+	
+	antivirus_results = json_str['data']['attributes']['last_analysis_results']
+	
+	for engine in antivirus_results.keys():
+		to_append = []
+		to_append.append(antivirus_results[engine]['engine_nam']
+		to_append.append(antivirus_results[engine]['category']
+		results.append(to_append)
 	
 	
 
