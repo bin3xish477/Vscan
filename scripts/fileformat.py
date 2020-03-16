@@ -26,8 +26,10 @@ def toCsv(data, outfile='results'):
 
 	try:
 		with open(outfile + '.csv', 'a+', newline='') as csvfile:
-			csvfile.write('<-------------Scan Report------------->\n')
-			csvfile.write('   Format = Antivirus engine, Result\n\n')
+			# field identifiers
+			csvfile.write('confirmed-timeout,failure,harmless,malicious,suspicious,timeout,type-unsupported\
+				undetected,last_modification_date,last_submission_date,magic_signature,meaningful_name,md5\
+				sha1,sha256,size,link_for_results\n')
 			# create csv writer object that will write
 			# our data in csv format to our file
 			writeto = csv.writer(csvfile, delimiter=',')

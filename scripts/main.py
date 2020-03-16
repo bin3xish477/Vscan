@@ -167,20 +167,41 @@ def forCsv(data, out_file):
 			none
 	"""
 	
+	
 	results = []
 	to_append = []
   
 	json_str = json.loads(data)
 	
-	antivirus_results = json_str['data']['attributes']['last_analysis_results']
-	
-	for engine in antivirus_results.keys():
-		to_append.append(antivirus_results[engine]['engine_name'])
-		to_append.append(antivirus_results[engine]['category'])
-	
+	"""  file stats containing overall scan results  """
+	antivirus_results = json_str['data']['attributes']
+
+	to_append.append(antivirus_results['last_analysis_stats']['confirmed-timeout'])
+	to_append.append(antivirus_results['last_analysis_stats']['failure'])
+	to_append.append(antivirus_results['last_analysis_stats']['harmless'])
+	to_append.append(antivirus_results['last_analysis_stats']['malicious'])
+	to_append.append(antivirus_results['last_analysis_stats']['suspicious'])
+	to_append.append(antivirus_results['last_analysis_stats']['timeout'])
+	to_append.append(antivirus_results['last_analysis_stats']['type-unsupported'])
+	to_append.append(antivirus_results['last_analysis_stats']['undetected'])
+
+	"""   append file metadata  """
+	to_append.append(antivirus_results['last_modification_date'])
+	to_append.append(antivirus_results['last_submission_date'])
+	to_append.append(antivirus_results['magic'])  # filters the type of file to be returned (i.e. magic signature)
+	to_append.append(antivirus_results['meaningfule_name'])
+	to_append.append(antivirus_results['md5'])
+	to_append.append(antivirus_results['sha1'])
+	to_append.append(antivirus_results['sha256'])
+	to_append.append(antivirus_results['size'])
+	to_append.append(antivirus_results['links']['self'])  # the url to find the raw json data
+
+	# append our list containing the result to the final results list
 	results.append(to_append)
-	
+
+	# invoke function to write to csv file
 	fileformat.toCsv(results)
+
 
 def forJson(data, out_file):
 	"""
