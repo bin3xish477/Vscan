@@ -54,7 +54,7 @@ def singleScan(file_name, apikey, file_format, out_file=None):
 
 	# notify of wait time
 	print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
-	sleep(1)
+	sleep(2)
 
 	# retrieve the files report
 	result = scanit.getReport(file_hash)
@@ -242,7 +242,44 @@ def forNorm(data, out_file):
 			none
 	"""
 
-	pass
+	json_dict = json.loads(data)
+	engine_results = dict()
+	file_stats = dict()
+
+	antivirus_results = json_dict['data']['attributes']['last_analysis_results']
+
+	for engine in antivirus_results.keys():
+		engine_results[engine] = antivirus_results[engine]
+		engine_results[engine]['engine_update'] = antivirus_results[engine]['engine_update']
+		engine_results[engine]['engine_version'] = antivirus_results[engine]['engine_version']
+		engine_results[engine]['category'] = antivirus_results[engine]['category']
+		engine_results[engine]['method'] = antivirus_results[engine]['method']
+		engine_results[engine]['result'] = antivirus_results[engine]['result']
+
+	file_report_stats = json_dict['data']['attributes']['last_analysis_stats']
+
+	file_stats['file_statistics'] = {
+		'confirmed-timeout' : file_report_stats['confirmed-timeout'],
+		'failure': file_report_stats['failure'],
+		'harmless': file_report_stats['harmless'],
+		'malicious': file_report_stats['malicious'],
+		'suspicious': file_report_stats['suspicious'],
+		'timeout': file_report_stats['timeout'],
+		'type-unsupported': file_report_stats['type-unsupported'],
+		'undetected': file_report_stats['undetected']
+	}
+
+	more_stats = json_dict['data']['attributes']
+
+	file_stats['last_modified'] = more_stats['last_modification_date']
+	file_stats['last_submitted'] = more_stats['last_submission_date']
+	file_stats['magic'] = more_stats['magic']
+	file_stats['md5_hash'] = more_stats['md5']
+	file_stats['sha1_hash'] = more_stats['sha1']
+	file_stats['sha256_hash'] = more_stats['sha256']
+	file_stats['type_description'] = more_stats['type_description']
+
+	fileformat.toNorm(engine_results, file_stats)
 
 
 def toConsole(data):

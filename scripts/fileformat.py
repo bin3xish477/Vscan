@@ -42,8 +42,6 @@ def toCsv(data, outfile='results'):
 		fileError()
 
 
-
-
 def toJson(data, outfile='results'):
 	"""
 	Writes data to a json file
@@ -60,23 +58,22 @@ def toJson(data, outfile='results'):
 
 	try:
 		with open(outfile + '.json', 'a+') as jsonfile:
-			jsonfile.write('[------------Scan Report-------------]')
+			jsonfile.write('[------------------------------Scan Report-----------------------------]\n')
 			# dump JSON data to JSON FILE
 			json.dump(data, jsonfile)
 	except:
 		fileError()
 
 
-
-
-def toNorm(data, outfile='results'):
+def toNorm(engine_results, file_stats, outfile='results'):
 	"""
 	Writes data to a text file
 
 	:parameters:
 
 		outfile (str) : name of output file, default = 'results'
-		data (dictionary) : dictionary containing selected data
+		engine_results (dictionary) : dictionary containing each antivirus engine results
+		file_stats (dictionary) : dictionary containing the statistics and properties of the file
 
 	:returns:
 
@@ -88,11 +85,19 @@ def toNorm(data, outfile='results'):
 			txtfile.write('[------------Scan Report-------------]')
 			# retrieve keys and values from dictionary
 			# and write them to the text file
-			for key, val in data:
-				txtfile.write(key + ': ' + val, end='\n')
+			for engine in engine_results.keys():
+				txtfile.write('\n')
+				for key, val in engine_results[engine].items():
+					txtfile.write('\n')
+					txtfile.write(key + ': ' + str(val))
+
+			txtfile.write('\n\n[-------------File Stats-------------]\n')
+			for key, val in file_stats.items():
+				txtfile.write('\n')
+				txtfile.write(key + ': ' + str(val))
+			txtfile.write('\n')
 	except:
 		fileError()
-
 
 
 def fileError():
