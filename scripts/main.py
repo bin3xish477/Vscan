@@ -105,7 +105,7 @@ def masScan(file_name, api_key, file_format, out_file=None):
 
 		# notify of wait time
 		print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
-		sleep(0.1)
+		sleep(15)
 
 		# this list will contain the data
 		# from each scan and will be appended
