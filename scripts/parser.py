@@ -40,7 +40,7 @@ def parseArgs():
     type=str,
     dest='mass_file',
     help='file containing list of files to scan (50 files max)\
-           \nNote: the timing for multiple scans will depend on the quality of your API key')
+           \nNote: 50 files will take about 12 to 15 minutes to scan')
 
   # if the user wants wants the output format to be pure csv
   parser.add_argument(
