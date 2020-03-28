@@ -49,7 +49,7 @@ def sendFile(apikey, filename):
 		resp = subp.run(f'curl --request POST \
 		--url https://www.virustotal.com/api/v3/files \
 		--header "x-apikey: {API_KEY}" \
-		--form file=@{file_path}', shell=True, stdout=subp.PIPE, stderr=subp.DEVNULL)
+		--form file=@{file_path}', shell=True, stdout=subp.PIPE, stderr=DEVNULL)
 
 	# if any other issues present themselves
 	except:
@@ -78,7 +78,7 @@ def getReport(sha256_hash):
 		# make GET request with curl to get file report
 		resp = subp.run(f'curl --request GET \
 		--url https://www.virustotal.com/api/v3/files/{sha256_hash} \
-		--header "x-apikey: {API_KEY}"', shell=True, stdout=subp.PIPE, stderr=subp.DEVNULL)
+		--header "x-apikey: {API_KEY}"', shell=True, stdout=subp.PIPE, stderr=DEVNULL)
 
 	except:
 		print('[-] %s%sAn error occured retrieving scan report%s' % (fg(233), bg(9), attr(0)))
