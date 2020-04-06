@@ -367,7 +367,7 @@ def sendReport():
 	"""
 
 	# get files to be sent as email attachment
-	FILES = input('%s\nEnter file/s to send seperated by commas $:%s ' % (fg(252), attr(0))).split(',')
+	FILES = input('%s\nEnter file/s to send seperated by commas $:%s ' % (fg(252), attr(0))).strip().split(' ')
 
 	# an object to easily craft an email
 	MESSAGE = EmailMessage()
