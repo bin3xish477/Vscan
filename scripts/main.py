@@ -2,11 +2,10 @@
 
 
 __author__ = 'Alexis Rodriguez'
-__collaborator__ = 'Kenny Masuda'
 __start__ = 2020_03_07
-__end__ = 2020_03
 __version__ = '1.0'
 __email__ = 'rodriguez10011999@gmail.com'
+
 
 try:
 	import scanit
@@ -26,7 +25,7 @@ except ImportError as err:
 	print(f'Import Error: {err}')
 
 
-def singleScan(file_name, apikey, file_format, out_file=None):
+def singleScan(file_name, apikey, file_format=None, out_file=None):
 	"""
 	Sends and scans file using VirusTotal's API
 
@@ -43,8 +42,12 @@ def singleScan(file_name, apikey, file_format, out_file=None):
 			none
 	"""
 
-	# the contents of the file in bytes
-	content = open(file_name, 'rb').read()
+	try:
+		# the contents of the file in bytes
+		content = open(file_name, 'rb').read()
+	except FileNotFoundError:
+		print(f"[-] The file {file_name} was not found...")
+		exit(1)
 
 	# the file generated based on the contents of the file
 	file_hash = genSha256(content)
@@ -71,7 +74,7 @@ def singleScan(file_name, apikey, file_format, out_file=None):
 
 	# check if the user wanted the results
 	# to be saved as a normal text file
-	elif file_format == 'norm':
+	elif file_format == 'norm' or file_format == 'txt':
 		forNorm(result, out_file)
 
 	# if the user did not specify a fileformat option
@@ -80,7 +83,7 @@ def singleScan(file_name, apikey, file_format, out_file=None):
 		toConsole(result)
 
 
-def masScan(file_name, api_key, file_format, out_file=None):
+def masScan(file_name, api_key, file_format=None, out_file=None):
 	"""
 	Sends and scans multiple files (max is 50) using VirusTotal's API
 
@@ -100,57 +103,64 @@ def masScan(file_name, api_key, file_format, out_file=None):
 	# contains list of results for each
 	# file that was scanned
 	all_results = []
-	# open file containing files to scan
-	with open(file_name, 'r') as all_files:
+	try:
+		# open file containing files to scan
+		with open(file_name, 'r') as all_files:
 
-		# notify of wait time
-		print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
-		sleep(15)
+			# notify of wait time
+			print('%s\nPlease wait patiently for your results ...\n%s' % (fg(154), attr(0)))
+			sleep(15)
 
-		# this list will contain the data
-		# from each scan and will be appended
-		# to the all_results list
-		result = []
-		# loop through each file and perform
-		# a scan on each one
-		for file in all_files:
-			# read the files contents in bytes
-			content = open(file, 'rb').read()
+			# this list will contain the data
+			# from each scan and will be appended
+			# to the all_results list
+			result = []
+			# loop through each file and perform
+			# a scan on each one
+			for file in all_files:
+				try:
+					# the contents of the file in bytes
+					content = open(file_name, 'rb').read()
+				except FileNotFoundError:
+					print(f"[-] The file {file} was not found...")
+					exit(1)
 
-			# get the sha256 hash for the file
-			file_hash = genSha256(content)
+				# get the sha256 hash for the file
+				file_hash = genSha256(content)
 
-			# send the file to get scanned
-			scanit.sendFile(api_key, file_name)
+				# send the file to get scanned
+				scanit.sendFile(api_key, file_name)
 
-			# retrieve scan report
-			result = scanit.getReport(file_hash)
+				# retrieve scan report
+				result = scanit.getReport(file_hash)
 
-			# append results from the scans to the all_results list
-			# to format the data with respect to the format
-			# the user specified
-			all_results.append(result)
+				# append results from the scans to the all_results list
+				# to format the data with respect to the format
+				# the user specified
+				all_results.append(result)
+		
+			# check if the user wanted the results
+			# to be saved as a CSV file
+			if file_format == 'csv':
+				forCsv(all_results, out_file)
 
-		# check if the user wanted the results
-		# to be saved as a CSV file
-		if file_format == 'csv':
-			forCsv(all_results, out_file)
+			# check if the user wanted the results
+			# to be saved as a jSON file
+			elif file_format == 'json':
+				forJson(all_results, out_file)
 
-		# check if the user wanted the results
-		# to be saved as a jSON file
-		elif file_format == 'json':
-			forJson(all_results, out_file)
+			# check if the user wanted the results
+			# to be saved as a normal text file
+			elif file_format == 'norm' or file_format == 'txt':
+				forNorm(all_results, out_file)
 
-		# check if the user wanted the results
-		# to be saved as a normal text file
-		elif file_format == 'norm':
-			forNorm(all_results, out_file)
-
-		# if the user did not specify a fileformat option
-		# print the raw data as json to the console
-		else:
-			toConsole(all_results)
-
+			# if the user did not specify a fileformat option
+			# print the raw data as json to the console
+			else:
+				toConsole(all_results)
+	except FileNotFoundError:
+		print(f"The file {file_name} was not found...")
+		exit(1)
 
 def forCsv(data, out_file):
 	"""
@@ -422,17 +432,14 @@ def main():
 		'interface':   arguments.interface,
 		'email':			 arguments.email
 	}
-
-	# if no file arguments were given
-	if not args_dict['single_file'] and not args_dict['mass_file']:
-		print('[-] no file arguments were passed... please try again!' % (fg(233), bg(9), attr(0)))
-		exit(0)
-
-	else:
-		if args_dict['interface']:
+	
+	if args_dict['interface']:
 			interface.interface()
 
-		else:
+	else:
+		if not args_dict['single_file'] and not args_dict['mass_file']:
+			print('[-] %s%sNo file arguments were passed... please try again!%s' % (fg(233), bg(9), attr(0)))
+			exit(0)
 			# if no file format is passed, this variable will not change
 			file_format = None
 			# # if file format is csv
@@ -448,21 +455,21 @@ def main():
 		if not file_format:
 			if args_dict['single_file']:
 				singleScan(
-					args_dict['single_file'],  # function arguments
+					args_dict['single_file'],
 					args_dict['api_key'],
 					file_format)
 
 			# if the m argument was given
 			else:
 				masScan(
-					args_dict['mass_file'],  # function arguments
+					args_dict['mass_file'],
 					args_dict['api_key'],
 					file_format)
 
 		else:
 			if args_dict['single_file']:
 				singleScan(
-					args_dict['single_file'],  # function arguments
+					args_dict['single_file'],
 					args_dict['api_key'],
 					file_format,
 					args_dict['output_file'])
@@ -470,12 +477,12 @@ def main():
 			# if the m argument was given
 			else:
 				masScan(
-					args_dict['mass_file'],  # function arguments
+					args_dict['mass_file'],
 					args_dict['api_key'],
 					file_format,
 					args_dict['output_file'])
 
-	# if arguments to email was passed, invoke function
+	# if argument to email was passed, invoke function
 	# to send email
 	if args_dict['email']:
 		sendReport()
